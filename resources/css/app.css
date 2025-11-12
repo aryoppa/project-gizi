@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+.montserrat {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Manual weight variations */
+.montserrat-thin {
+    font-weight: 100;
+}
+.montserrat-extralight {
+    font-weight: 200;
+}
+.montserrat-light {
+    font-weight: 300;
+}
+.montserrat-regular {
+    font-weight: 400;
+}
+.montserrat-medium {
+    font-weight: 500;
+}
+.montserrat-semibold {
+    font-weight: 600;
+}
+.montserrat-bold {
+    font-weight: 700;
+}
+.montserrat-extrabold {
+    font-weight: 800;
+}
+.montserrat-black {
+    font-weight: 900;
+}
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';

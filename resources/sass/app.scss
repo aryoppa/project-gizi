@@ -1,0 +1,41 @@
+@import 'bootstrap/scss/bootstrap';
+
+.nerko-one-regular {
+  font-family: "Nerko One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.montserrat {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Manual weight variations */
+.montserrat-thin {
+    font-weight: 100;
+}
+.montserrat-extralight {
+    font-weight: 200;
+}
+.montserrat-light {
+    font-weight: 300;
+}
+.montserrat-regular {
+    font-weight: 400;
+}
+.montserrat-medium {
+    font-weight: 500;
+}
+.montserrat-semibold {
+    font-weight: 600;
+}
+.montserrat-bold {
+    font-weight: 700;
+}
+.montserrat-extrabold {
+    font-weight: 800;
+}
+.montserrat-black {
+    font-weight: 900;
+}
