@@ -39,6 +39,26 @@ Route::get('/admin_login', function () {
     return view('admin_login');
 });
 
+// Public routes — dihitung oleh middleware
+Route::middleware(['web', 'count.visitor'])->group(function () {
+    Route::get('/', function () { return view('home'); });
+
+    Route::get('/tentang_kami', function () { return view('tentang_kami'); });
+
+    Route::get('/dokumentasi', function () { return view('dokumentasi'); });
+
+    Route::get('/edukasi', function () { return view('edukasi'); });
+    Route::get('/edukasi/{id}', function ($id) { return view('detail_edukasi'); });
+
+    Route::get('/resep', function () { return view('resep'); });
+    Route::get('/resep/{id}', function ($id) { return view('detail_resep'); });
+
+    Route::get('/mealplan', function () { return view('mealplan'); });
+
+    // public admin login view (boleh tetap di publik)
+    Route::get('/admin_login', function () { return view('admin_login'); });
+});
+
 
 // Route login admin
 Route::get('/admin/login', function () {
@@ -66,8 +86,25 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
         }
-        return view('admin_dashboard');
+        // Ambil statistik visits untuk ditampilkan di dashboard
+        $totalVisits = \App\Models\Visit::count();
+
+        $topPages = \App\Models\Visit::selectRaw('path, count(*) as hits')
+            ->groupBy('path')
+            ->orderByDesc('hits')
+            ->limit(10)
+            ->get();
+
+        $visitsLast7 = \App\Models\Visit::selectRaw('DATE(visited_at) as date, count(*) as hits')
+            ->where('visited_at', '>=', now()->subDays(6)->startOfDay())
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        return view('admin_dashboard', compact('totalVisits', 'topPages', 'visitsLast7'));
     })->name('admin.dashboard');
+
+    
 
     // Dokumentasi Routes
     Route::get('/dokumentasi', function () {

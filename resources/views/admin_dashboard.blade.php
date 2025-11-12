@@ -21,6 +21,42 @@
         <div class="container-fluid">
             <!-- Stats Cards -->
             <div class="row g-4 mb-4">
+                <!-- Total Visits Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div>
+                                <p class="text-muted mb-1 montserrat-medium">Total Visits</p>
+                                <div class="d-flex align-items-center justify-content-start gap-2">
+                                    <img src="/icons/stat_visits.png" alt="Visits Icon"
+                                        style="width: 60px; height: 60px;">
+                                    <h3 class="montserrat-bold mb-0">
+                                        {{ $totalVisits ?? \App\Models\Visit::count() }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Visits Card -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div>
+                                <p class="text-muted mb-1 montserrat-medium">Hari Ini</p>
+                                <div class="d-flex align-items-center justify-content-start gap-2">
+                                    <img src="/icons/stat_today.png" alt="Today Icon"
+                                        style="width: 60px; height: 60px;">
+                                    <h3 class="montserrat-bold mb-0">
+                                        {{ \App\Models\Visit::whereDate('visited_at', now()->toDateString())->count() }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Dokumentasi Card -->
                 <div class="col-lg-3 col-md-6">
                     <div class="card stats-card border-0 shadow-sm h-100">
