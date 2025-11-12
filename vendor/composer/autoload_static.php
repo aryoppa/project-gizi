@@ -212,9 +212,9 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
         ),
         'Whoops\\' => 
         array (
@@ -611,9 +611,22 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\Admin\\DokumentasiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DokumentasiController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\VisitController' => __DIR__ . '/../..' . '/app/Http/Controllers/VisitController.php',
+        'App\\Http\\Middleware\\CountVisitor' => __DIR__ . '/../..' . '/app/Http/Middleware/CountVisitor.php',
+        'App\\Models\\Dokumentasi' => __DIR__ . '/../..' . '/app/Models/Dokumentasi.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\Visit' => __DIR__ . '/../..' . '/app/Models/Visit.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\View\\Components\\CardEdukasi' => __DIR__ . '/../..' . '/app/View/Components/CardEdukasi.php',
+        'App\\View\\Components\\CardResep' => __DIR__ . '/../..' . '/app/View/Components/CardResep.php',
+        'App\\View\\Components\\Carousel' => __DIR__ . '/../..' . '/app/View/Components/Carousel.php',
+        'App\\View\\Components\\CarouselDokumentasi' => __DIR__ . '/../..' . '/app/View/Components/CarouselDokumentasi.php',
+        'App\\View\\Components\\Footer' => __DIR__ . '/../..' . '/app/View/Components/Footer.php',
+        'App\\View\\Components\\Header' => __DIR__ . '/../..' . '/app/View/Components/Header.php',
+        'App\\View\\Components\\LayoutAdmin' => __DIR__ . '/../..' . '/app/View/Components/LayoutAdmin.php',
+        'App\\View\\Components\\Navbar' => __DIR__ . '/../..' . '/app/View/Components/Navbar.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',

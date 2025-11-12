@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\DokumentasiController;
 
 Route::get('/', function () {
     return view('home');
@@ -81,6 +82,19 @@ Route::post('/admin/login', function (Request $request) {
 // Admin Dashboard Routes (dengan middleware check session)
 Route::middleware(['web'])->prefix('admin')->group(function () {
 
+    Route::get('/dokumentasi', [DokumentasiController::class, 'index'])->name('admin.dokumentasi.index');
+    Route::get('/dokumentasi/create', [DokumentasiController::class, 'create'])->name('admin.dokumentasi.create');
+    Route::post('/dokumentasi/store', [DokumentasiController::class, 'store'])->name('admin.dokumentasi.store');
+    Route::delete('/dokumentasi/{dokumentasi}', [DokumentasiController::class, 'destroy'])->name('admin.dokumentasi.destroy');
+    
+    // // Dokumentasi Routes
+    // Route::get('/dokumentasi', function () {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
+    //     return view('admin_dokumentasi');
+    // })->name('admin.dokumentasi.index');
+
     // Dashboard
     Route::get('/dashboard', function () {
         if (!session('admin_logged_in')) {
@@ -106,13 +120,6 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
 
     
 
-    // Dokumentasi Routes
-    Route::get('/dokumentasi', function () {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_dokumentasi');
-    })->name('admin.dokumentasi.index');
 
     Route::get('/dokumentasi/create', function () {
         if (!session('admin_logged_in')) {
@@ -121,31 +128,31 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         return view('tambah_dokumentasi');
     })->name('admin.dokumentasi.create');
 
-    Route::post('/dokumentasi/store', function (Request $request) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
+    // Route::post('/dokumentasi/store', function (Request $request) {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
 
-        // Validate
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
-        ]);
+    //     // Validate
+    //     $request->validate([
+    //         'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
+    //     ]);
 
-        // Handle file upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/dokumentasi'), $imageName);
+    //     // Handle file upload
+    //     if ($request->hasFile('image')) {
+    //         $image = $request->file('image');
+    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
+    //         $image->move(public_path('img/dokumentasi'), $imageName);
 
-            // Save to database here (if you have a model)
-            // Dokumentasi::create([
-            //     'image' => 'img/dokumentasi/' . $imageName,
-            // ]);
-        }
+    //         // Save to database here (if you have a model)
+    //         // Dokumentasi::create([
+    //         //     'image' => 'img/dokumentasi/' . $imageName,
+    //         // ]);
+    //     }
 
-        return redirect()->route('admin.dokumentasi.index')
-            ->with('success', 'Dokumentasi telah ditambahkan!');
-    })->name('admin.dokumentasi.store');
+    //     return redirect()->route('admin.dokumentasi.index')
+    //         ->with('success', 'Dokumentasi telah ditambahkan!');
+    // })->name('admin.dokumentasi.store');
 
     Route::get('/dokumentasi/{id}', function ($id) {
         if (!session('admin_logged_in')) {

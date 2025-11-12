@@ -35,7 +35,7 @@
                 </div>
             @endif
 
-            <div class="row g-4 mb-5">
+            <!-- <div class="row g-4 mb-5">
                 @for ($i = 1; $i <= 12; $i++)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="dokumentasi-card">
@@ -49,10 +49,39 @@
                         </div>
                     </div>
                 @endfor
+            </div> -->
+            <!-- Dokumentasi Grid -->
+            <div class="row g-4 mb-5">
+                @forelse ($dokumentasis as $dokumentasi)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="dokumentasi-card">
+                            {{-- ✅ Load image dynamically from storage --}}
+                            <img src="{{ asset('storage/' . $dokumentasi->image) }}"
+                                alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}" class="img-fluid">
+
+                            <div class="card-overlay">
+                                {{-- ✅ Delete form --}}
+                                <form action="{{ route('admin.dokumentasi.destroy', $dokumentasi->id) }}"
+                                    method="POST" onsubmit="return confirmDelete(this)">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-center text-muted mt-4">Belum ada dokumentasi yang diupload.</p>
+                @endforelse
             </div>
 
             <!-- Pagination -->
-            <nav aria-label="Page navigation">
+            <div class="d-flex justify-content-center">
+                {{ $dokumentasis->links() }}
+            </div>
+            <!-- <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center align-items-center">
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous">
@@ -84,7 +113,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
 
         <style>

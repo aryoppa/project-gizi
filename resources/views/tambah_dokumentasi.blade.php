@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <x-layout-admin pageTitle="Dashboard">
+    <x-layout-admin pageTitle="Dashboard - Tambah Dokumentasi">
         <div class="container-fluid montserrat">
             <div class="row justify-content-center">
                 <div class="col-lg-12">

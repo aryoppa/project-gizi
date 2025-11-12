@@ -6,9 +6,22 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\Admin\\DokumentasiController' => $baseDir . '/app/Http/Controllers/Admin/DokumentasiController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\VisitController' => $baseDir . '/app/Http/Controllers/VisitController.php',
+    'App\\Http\\Middleware\\CountVisitor' => $baseDir . '/app/Http/Middleware/CountVisitor.php',
+    'App\\Models\\Dokumentasi' => $baseDir . '/app/Models/Dokumentasi.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\Visit' => $baseDir . '/app/Models/Visit.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
+    'App\\View\\Components\\CardEdukasi' => $baseDir . '/app/View/Components/CardEdukasi.php',
+    'App\\View\\Components\\CardResep' => $baseDir . '/app/View/Components/CardResep.php',
+    'App\\View\\Components\\Carousel' => $baseDir . '/app/View/Components/Carousel.php',
+    'App\\View\\Components\\CarouselDokumentasi' => $baseDir . '/app/View/Components/CarouselDokumentasi.php',
+    'App\\View\\Components\\Footer' => $baseDir . '/app/View/Components/Footer.php',
+    'App\\View\\Components\\Header' => $baseDir . '/app/View/Components/Header.php',
+    'App\\View\\Components\\LayoutAdmin' => $baseDir . '/app/View/Components/LayoutAdmin.php',
+    'App\\View\\Components\\Navbar' => $baseDir . '/app/View/Components/Navbar.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',
     'Brick\\Math\\BigInteger' => $vendorDir . '/brick/math/src/BigInteger.php',
