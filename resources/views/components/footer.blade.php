@@ -33,15 +33,12 @@
                 <div class="col-md-3 mb-4">
                     <h6 class="text-uppercase small fw-bold pb-2 border-bottom border-3 d-inline-block"
                         style="border-color: #FF821C !important;">Penghitung Pengunjung</h6>
-                    <p class="small mb-0" style="color: #FF821C !important">
-                        <div class="d-flex align-items-center justify-content-start gap-2">
-                            <!-- <img src="/icons/stat_visits.png" alt="Visits Icon"
-                                style="width: 60px; height: 60px;"> -->
-                            <h3 class="montserrat-bold mb-0">
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- <img src="/icons/stat_total.png" alt="location" style="width:24px;height:24px;"> -->
+                        <h3 class="montserrat-bold mb-0">
                                 {{ $totalVisits ?? \App\Models\Visit::count() }}
                             </h3>
-                        </div>
-                    </p>
+                    </div>
                 </div>
             </div>
             
