@@ -34,11 +34,17 @@
                     <h6 class="text-uppercase small fw-bold pb-2 border-bottom border-3 d-inline-block"
                         style="border-color: #FF821C !important;">Penghitung Pengunjung</h6>
                     <p class="small mb-0" style="color: #FF821C !important">
-                        INSERT COUNTER HERE
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <!-- <img src="/icons/stat_visits.png" alt="Visits Icon"
+                                style="width: 60px; height: 60px;"> -->
+                            <h3 class="montserrat-bold mb-0">
+                                {{ $totalVisits ?? \App\Models\Visit::count() }}
+                            </h3>
+                        </div>
                     </p>
                 </div>
             </div>
-
+            
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-4 border-top"
                 style="border-color: rgba(255,255,255,0.2) !important;">
                 <p class="mb-0 small">© 2025 All Rights Reserved. Developed with ❤️</p>
