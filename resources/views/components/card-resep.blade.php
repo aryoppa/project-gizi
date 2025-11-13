@@ -1,4 +1,15 @@
-@props(['image', 'title', 'energy', 'protein', 'fat', 'carbs', 'portion', 'link' => null])
+@props([
+    'image',
+    'title',
+    'energy',
+    'protein',
+    'fat',
+    'carbs',
+    'portion',
+    'link' => null,
+    'showActions' => false,
+    'id' => null,
+])
 
 <div class="card card-resep h-100 border-0 shadow-sm">
     <div class="image-resep">
@@ -21,6 +32,22 @@
             <a href="{{ $link }}" class="btn btn-sm btn-primary montserrat-semibold w-40">
                 Lihat Detail <i class="bi bi-chevron-right"></i>
             </a>
+        @endif
+
+        @if ($showActions)
+            <div class="card-actions mt-3">
+                <button class="btn-icon" title="Detail"
+                    onclick="window.location.href='{{ route('admin.resep.show', $id ?? 1) }}'">
+                    <i class="bi bi-info-circle"></i>
+                </button>
+                <button class="btn-icon" title="Edit"
+                    onclick="window.location.href='{{ route('admin.resep.edit', $id ?? 1) }}'">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn-icon text-danger" onclick="confirmDelete({{ $id ?? 1 }})" title="Hapus">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
         @endif
     </div>
 </div>
@@ -93,5 +120,33 @@
 
     .card-resep .btn-primary:hover i {
         transform: translateX(3px);
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .btn-icon {
+        background: transparent;
+        border: none;
+        color: #287BBF;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0.25rem;
+    }
+
+    .btn-icon:hover {
+        transform: scale(1.2);
+    }
+
+    .btn-icon.text-danger {
+        color: #dc3545 !important;
+    }
+
+    .btn-icon.text-danger:hover {
+        color: #bb2d3b !important;
     }
 </style>

@@ -19,9 +19,9 @@
 
         @if ($showActions)
             <div class="card-actions mt-3">
-                <button class="btn-icon" title="Lihat"
+                <button class="btn-icon" title="Detail"
                     onclick="window.location.href='{{ route('admin.edukasi.show', $id ?? 1) }}'">
-                    <i class="bi bi-eye"></i>
+                    <i class="bi bi-info-circle"></i>
                 </button>
                 <button class="btn-icon" title="Edit"
                     onclick="window.location.href='{{ route('admin.edukasi.edit', $id ?? 1) }}'">

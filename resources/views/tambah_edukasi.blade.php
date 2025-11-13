@@ -81,7 +81,7 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-end gap-3">
-                        <a href="{{ route('admin.edukasi.index') }}" class="btn btn-cancel montserrat-semibold">
+                        <a href="{{ route('admin.edukasi.index') }}" class="btn btn-batal montserrat-semibold">
                             Batal
                         </a>
                         <button type="submit" class="btn btn-submit montserrat-semibold">
@@ -177,19 +177,18 @@
             }
 
             /* Buttons */
-            .btn-cancel {
-                background-color: white;
-                color: #666;
-                border: 1px solid #ddd;
-                border-radius: 25px;
-                padding: 0.6rem 2rem;
+            .btn-batal {
+                background-color: transparent;
+                color: #ff383b;
+                border: 1px solid #ff383b;
+                border-radius: 20px;
+                padding: 0.6rem 1.5rem;
                 transition: all 0.3s ease;
             }
 
-            .btn-cancel:hover {
-                background-color: #f8f9fa;
-                border-color: #999;
-                color: #333;
+            .btn-batal:hover {
+                background-color: #ff383b;
+                color: #ffffff;
             }
 
             .btn-submit {
@@ -203,7 +202,6 @@
 
             .btn-submit:hover {
                 background-color: #1f6aa5;
-                transform: translateY(-2px);
                 box-shadow: 0 4px 12px rgba(40, 123, 191, 0.3);
             }
 
