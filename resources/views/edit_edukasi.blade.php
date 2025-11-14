@@ -23,74 +23,83 @@
             <div class="form-card">
                 <h4 class="montserrat-bold mb-4">Edit Edukasi Gizi</h4>
 
-                <form action="{{ route('admin.edukasi.update', $id ?? 1) }}" method="POST"
+                <form action="{{ route('admin.edukasi.update', $edukasi->id) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <!-- Judul -->
                     <div class="mb-4">
-                        <label for="judul" class="form-label montserrat-semibold">Judul</label>
-                        <input type="text" class="form-control montserrat-regular" id="judul" name="judul"
-                            placeholder="Masukkan judul di sini" required
-                            value="{{ old('judul', 'Perencanaan Menu') }}">
-                        @error('judul')
+                        <label for="title" class="form-label montserrat-semibold">Judul</label>
+                        <input type="text" class="form-control montserrat-regular" id="title" name="title"
+                            value="{{ old('title', $edukasi->title) }}">
+                        @error('title')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <!-- Foto dan Video Row -->
-                    <div class="row mb-4">
+                    <!-- Video Link -->
+                    <!-- <div class="mb-4">
+                        <label for="video_link" class="form-label montserrat-semibold">Link Video</label>
+                        <input type="text" class="form-control montserrat-regular" id="video_link" name="video_link"
+                            placeholder="Masukkan Link Video di sini" required value="{{ old('video_link') }}">
+                        @error('video_link')
+                            <div class="text-danger mt-1 small">{{ $message }}</div>
+                        @enderror
+                    </div> -->
+                    <div class="mb-3">
+                                <label for="image" class="form-label montserrat-semibold">Gambar (opsional)</label>
+                                <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                                <small class="text-muted">Support PNG, JPG, JPEG. Maks 4MB.</small>
+
+                                {{-- preview area --}}
+                                <div id="imagePreviewWrapper" class="mt-3" style="display: {{ $edukasi->image ? 'block' : 'none' }};">
+                                    <p class="small mb-1">Preview Gambar:</p>
+                                    <img id="imagePreview" src="{{ $edukasi->image ? asset('storage/' . $edukasi->image) : '' }}" alt="preview" style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="video_link" class="form-label montserrat-semibold">Link Video (YouTube / Google Drive)</label>
+                                <input id="video_link" name="video_link" type="url" class="form-control" value="{{ old('video_link', $edukasi->video_link) }}">
+                                <small class="text-muted">Masukkan link YouTube atau Google Drive. Sistem akan mencoba menampilkan preview embed.</small>
+
+                                {{-- video preview --}}
+                                <div id="videoPreviewWrapper" class="mt-3" style="display: none;">
+                                    <p class="small mb-1">Preview Video:</p>
+                                    <div id="videoEmbed" class="ratio ratio-16x9">
+                                        {{-- iframe akan di-inject oleh JS --}}
+                                    </div>
+                                </div>
+                            </div>
+                    <!-- Foto -->
+                    <!-- <div class="row mb-4"> -->
                         <!-- Foto -->
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <label class="form-label montserrat-semibold">Foto</label>
                             <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="foto" name="foto" accept="image/*"
-                                    onchange="handleFileUpload(event, 'foto')">
-                                <label for="foto" class="btn-upload montserrat-semibold">
+                                <input type="file" class="d-none" id="image" name="image" accept="image/*"
+                                    onchange="handleFileUpload(event, 'image')">
+                                <label for="image" class="btn-upload montserrat-semibold">
                                     Upload
                                 </label>
                                 <input type="text" class="form-control file-display montserrat-regular"
-                                    id="fotoDisplay" placeholder="detail_edu1.png" readonly>
+                                    id="fotoDisplay" placeholder="Masukkan foto" readonly>
                             </div>
-                            <small class="text-muted montserrat-regular">Biarkan kosong jika tidak ingin mengubah
-                                foto</small>
-                            @error('foto')
+                            @error('image')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> -->
 
-                        <!-- Video -->
-                        <div class="col-md-6">
-                            <label for="video_link" class="form-label montserrat-semibold">Video Link</label>
-                            <input type="url" class="form-control montserrat-regular" id="video_link"
-                                name="video_link" placeholder="https://youtube.com/watch?v=..."
-                                value="{{ old('video_link', 'https://youtube.com/watch?v=example') }}">
-                            <small class="text-muted montserrat-regular">Masukkan link YouTube atau video
-                                lainnya</small>
-                            @error('video_link')
-                                <div class="text-danger mt-1 small">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                        
+                    <!-- </div> -->
 
                     <!-- Deskripsi -->
                     <div class="mb-4">
-                        <label for="deskripsi" class="form-label montserrat-semibold">Deskripsi</label>
-                        <textarea class="form-control montserrat-regular" id="deskripsi" name="deskripsi" rows="6"
-                            placeholder="Masukkan deskripsi di sini" required>{{ old(
-                                'deskripsi',
-                                'Perencanaan menu merupakan kegiatan menyusun hidangan dalam variasi yang serisai untuk manajemen penyelenggaraan makanan di rumah tangga atau institusi.
-                                                        
-                                                        Fungsi perencanaan menu:
-                                                        • Memudahkan pelaksanaan tugas sehari-hari
-                                                        • Menyusun hidangan yang memenuhi kebutuhan zat gizi tubuh
-                                                        • Mengatur variasi dan kombinasi makanan
-                                                        • Menghindari kekurangan biaya/pengeluaran harga makanan
-                                                        • Penghemat waktu dan tenaga tersedia
-                                                        • Sebagai alat pemulihan gizi',
-                            ) }}</textarea>
-                        @error('deskripsi')
+                        <label for="description" class="form-label montserrat-semibold">Deskripsi</label>
+                        <textarea class="form-control montserrat-regular" id="description" name="description" rows="6"
+                            placeholder="Masukkan deskripsi di sini" required>{{ old('description', $edukasi->description) }}</textarea>
+                        @error('description')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>
@@ -101,7 +110,7 @@
                             Batal
                         </a>
                         <button type="submit" class="btn btn-submit montserrat-semibold">
-                            Update Edukasi
+                            Edit Edukasi
                         </button>
                     </div>
                 </form>
@@ -243,6 +252,64 @@
                     fileDisplay.value = fileName;
                 }
             }
+            // video preview helper: normalize common links to embed URL
+    function normalizeVideoLink(url) {
+        if (!url) return null;
+
+        // Google Drive file link -> preview
+        const driveFile = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+        if (driveFile) {
+            return `https://drive.google.com/file/d/${driveFile[1]}/preview`;
+        }
+
+        // Google Drive "open?id=" -> preview
+        const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+        if (driveOpen) {
+            return `https://drive.google.com/file/d/${driveOpen[1]}/preview`;
+        }
+
+        // YouTube watch?v= or youtu.be -> embed
+        const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+        if (yt) {
+            return `https://www.youtube.com/embed/${yt[1]}`;
+        }
+
+        // If already an embed URL, return as is
+        if (url.includes('youtube.com/embed') || url.includes('drive.google.com')) return url;
+
+        return null; // unknown
+    }
+
+    const videoLinkInput = document.getElementById('video_link');
+    const videoPreviewWrapper = document.getElementById('videoPreviewWrapper');
+    const videoEmbed = document.getElementById('videoEmbed');
+
+    function updateVideoPreviewFromValue(value) {
+        const embedUrl = normalizeVideoLink(value);
+        if (!embedUrl) {
+            videoPreviewWrapper.style.display = 'none';
+            videoEmbed.innerHTML = '';
+            return;
+        }
+
+        videoEmbed.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>`;
+        videoPreviewWrapper.style.display = 'block';
+    }
+
+    // initial: if value present from server, show preview
+    document.addEventListener('DOMContentLoaded', function() {
+        const initialVideo = videoLinkInput.value;
+        if (initialVideo) updateVideoPreviewFromValue(initialVideo);
+    });
+
+    videoLinkInput.addEventListener('blur', function(e) {
+        updateVideoPreviewFromValue(e.target.value.trim());
+    });
+
+    videoLinkInput.addEventListener('input', function(e) {
+        // live preview while typing -- optional, comment out if noisy
+        updateVideoPreviewFromValue(e.target.value.trim());
+    });
         </script>
     </x-layout-admin>
 </body>

@@ -28,57 +28,52 @@
 
                     <!-- Judul -->
                     <div class="mb-4">
-                        <label for="judul" class="form-label montserrat-semibold">Judul</label>
-                        <input type="text" class="form-control montserrat-regular" id="judul" name="judul"
-                            placeholder="Masukkan judul di sini" required value="{{ old('judul') }}">
-                        @error('judul')
+                        <label for="title" class="form-label montserrat-semibold">Judul</label>
+                        <input type="text" class="form-control montserrat-regular" id="title" name="title"
+                            placeholder="Masukkan judul di sini" required value="{{ old('title') }}">
+                        @error('title')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <!-- Foto dan Video Row -->
+                    <!-- Video Link -->
+                    <div class="mb-4">
+                        <label for="video_link" class="form-label montserrat-semibold">Link Video</label>
+                        <input type="text" class="form-control montserrat-regular" id="video_link" name="video_link"
+                            placeholder="Masukkan Link Video di sini" required value="{{ old('video_link') }}">
+                        @error('video_link')
+                            <div class="text-danger mt-1 small">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Foto -->
                     <div class="row mb-4">
                         <!-- Foto -->
                         <div class="col-md-6">
                             <label class="form-label montserrat-semibold">Foto</label>
                             <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="foto" name="foto" accept="image/*"
-                                    onchange="handleFileUpload(event, 'foto')">
-                                <label for="foto" class="btn-upload montserrat-semibold">
+                                <input type="file" class="d-none" id="image" name="image" accept="image/*"
+                                    onchange="handleFileUpload(event, 'image')">
+                                <label for="image" class="btn-upload montserrat-semibold">
                                     Upload
                                 </label>
                                 <input type="text" class="form-control file-display montserrat-regular"
                                     id="fotoDisplay" placeholder="Masukkan foto" readonly>
                             </div>
-                            @error('foto')
+                            @error('image')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Video -->
-                        <div class="col-md-6">
-                            <label class="form-label montserrat-semibold">Video</label>
-                            <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="video" name="video" accept="video/*"
-                                    onchange="handleFileUpload(event, 'video')">
-                                <label for="video" class="btn-upload montserrat-semibold">
-                                    Upload
-                                </label>
-                                <input type="text" class="form-control file-display montserrat-regular"
-                                    id="videoDisplay" placeholder="Masukkan video" readonly>
-                            </div>
-                            @error('video')
-                                <div class="text-danger mt-1 small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        
                     </div>
 
                     <!-- Deskripsi -->
                     <div class="mb-4">
-                        <label for="deskripsi" class="form-label montserrat-semibold">Deskripsi</label>
-                        <textarea class="form-control montserrat-regular" id="deskripsi" name="deskripsi" rows="6"
-                            placeholder="Masukkan deskripsi di sini" required>{{ old('deskripsi') }}</textarea>
-                        @error('deskripsi')
+                        <label for="description" class="form-label montserrat-semibold">Deskripsi</label>
+                        <textarea class="form-control montserrat-regular" id="description" name="description" rows="6"
+                            placeholder="Masukkan deskripsi di sini" required>{{ old('description') }}</textarea>
+                        @error('description')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>

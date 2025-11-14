@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DokumentasiController;
+use App\Http\Controllers\Admin\EdukasiController;
 
 Route::get('/', function () {
     return view('home');
@@ -87,15 +88,15 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
     Route::post('/dokumentasi/store', [DokumentasiController::class, 'store'])->name('admin.dokumentasi.store');
     Route::delete('/dokumentasi/{dokumentasi}', [DokumentasiController::class, 'destroy'])->name('admin.dokumentasi.destroy');
     
-    // // Dokumentasi Routes
-    // Route::get('/dokumentasi', function () {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-    //     return view('admin_dokumentasi');
-    // })->name('admin.dokumentasi.index');
+    // admin edukasi management
+    Route::get('/edukasi', [EdukasiController::class, 'index'])->name('admin.edukasi.index');
+    Route::get('/edukasi/create', [EdukasiController::class, 'create'])->name('admin.edukasi.create');
+    Route::post('/edukasi/store', [EdukasiController::class, 'store'])->name('admin.edukasi.store');
+    Route::get('/edukasi/{edukasi}', [EdukasiController::class, 'show'])->name('admin.edukasi.show');
+    Route::get('/edukasi/{edukasi}/edit', [EdukasiController::class, 'edit'])->name('admin.edukasi.edit');
+    Route::put('/edukasi/{edukasi}', [EdukasiController::class, 'update'])->name('admin.edukasi.update');
+    Route::delete('/edukasi/{edukasi}', [EdukasiController::class, 'destroy'])->name('admin.edukasi.destroy');
 
-    // Dashboard
     Route::get('/dashboard', function () {
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
@@ -118,16 +119,6 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         return view('admin_dashboard', compact('totalVisits', 'topPages', 'visitsLast7'));
     })->name('admin.dashboard');
 
-    
-
-
-    Route::get('/dokumentasi/create', function () {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('tambah_dokumentasi');
-    })->name('admin.dokumentasi.create');
-
     Route::get('/dokumentasi/{id}', function ($id) {
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
@@ -135,103 +126,80 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         return view('admin_dokumentasi_detail');
     })->name('admin.dokumentasi.show');
 
-    Route::get('/dokumentasi/{id}/edit', function ($id) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_dokumentasi_edit');
-    })->name('admin.dokumentasi.edit');
-
-    Route::delete('/dokumentasi/{id}', function ($id) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-
-        // Handle delete logic here
-        // $dokumentasi = Dokumentasi::findOrFail($id);
-        // if (file_exists(public_path($dokumentasi->image))) {
-        //     unlink(public_path($dokumentasi->image));
-        // }
-        // $dokumentasi->delete();
-
-        return redirect()->route('admin.dokumentasi.index')
-            ->with('success', 'Dokumentasi berhasil dihapus!');
-    })->name('admin.dokumentasi.destroy');
-
     // Edukasi Routes
-    Route::get('/edukasi', function () {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_edukasi');
-    })->name('admin.edukasi.index');
+    // Route::get('/edukasi', function () {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
+    //     return view('admin_edukasi');
+    // })->name('admin.edukasi.index');
 
-    Route::get('/edukasi/create', function () {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_edukasi_create');
-    })->name('admin.edukasi.create');
+    // Route::get('/edukasi/create', function () {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
+    //     return view('tambah_edukasi');
+    // })->name('admin.edukasi.create');
 
-    Route::post('/edukasi/store', function (Request $request) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
+    // Route::post('/edukasi/store', function (Request $request) {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
 
-        // Validate
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'gambar' => 'required|image|mimes:jpeg,jpg,png|max:2048'
-        ]);
+    //     // Validate
+    //     $request->validate([
+    //         'judul' => 'required|string|max:255',
+    //         'deskripsi' => 'required|string',
+    //         'gambar' => 'required|image|mimes:jpeg,jpg,png|max:2048'
+    //     ]);
 
-        // Handle file upload
-        if ($request->hasFile('gambar')) {
-            $image = $request->file('gambar');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/edukasi'), $imageName);
+    //     // Handle file upload
+    //     if ($request->hasFile('gambar')) {
+    //         $image = $request->file('gambar');
+    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
+    //         $image->move(public_path('img/edukasi'), $imageName);
 
-            // Save to database here
-            // Edukasi::create([
-            //     'judul' => $request->judul,
-            //     'deskripsi' => $request->deskripsi,
-            //     'gambar' => 'img/edukasi/' . $imageName,
-            // ]);
-        }
+    //         // Save to database here
+    //         // Edukasi::create([
+    //         //     'judul' => $request->judul,
+    //         //     'deskripsi' => $request->deskripsi,
+    //         //     'gambar' => 'img/edukasi/' . $imageName,
+    //         // ]);
+    //     }
 
-        return redirect()->route('admin.edukasi.index')
-            ->with('success', 'Edukasi telah ditambahkan!');
-    })->name('admin.edukasi.store');
+    //     return redirect()->route('admin.edukasi.index')
+    //         ->with('success', 'Edukasi telah ditambahkan!');
+    // })->name('admin.edukasi.store');
 
-    Route::get('/edukasi/{id}', function ($id) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_edukasi_detail');
-    })->name('admin.edukasi.show');
+    // Route::get('/edukasi/{id}', function ($id) {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
+    //     return view('admin_edukasi_detail');
+    // })->name('admin.edukasi.show');
 
-    Route::get('/edukasi/{id}/edit', function ($id) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
-        return view('admin_edukasi_edit');
-    })->name('admin.edukasi.edit');
+    // Route::get('/edukasi/{id}/edit', function ($id) {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
+    //     return view('admin_edukasi_edit');
+    // })->name('admin.edukasi.edit');
 
-    Route::delete('/edukasi/{id}', function ($id) {
-        if (!session('admin_logged_in')) {
-            return redirect()->route('admin.login');
-        }
+    // Route::delete('/edukasi/{id}', function ($id) {
+    //     if (!session('admin_logged_in')) {
+    //         return redirect()->route('admin.login');
+    //     }
 
-        // Handle delete logic here
-        // $edukasi = Edukasi::findOrFail($id);
-        // if (file_exists(public_path($edukasi->gambar))) {
-        //     unlink(public_path($edukasi->gambar));
-        // }
-        // $edukasi->delete();
+    //     // Handle delete logic here
+    //     // $edukasi = Edukasi::findOrFail($id);
+    //     // if (file_exists(public_path($edukasi->gambar))) {
+    //     //     unlink(public_path($edukasi->gambar));
+    //     // }
+    //     // $edukasi->delete();
 
-        return redirect()->route('admin.edukasi.index')
-            ->with('success', 'Edukasi berhasil dihapus!');
-    })->name('admin.edukasi.destroy');
+    //     return redirect()->route('admin.edukasi.index')
+    //         ->with('success', 'Edukasi berhasil dihapus!');
+    // })->name('admin.edukasi.destroy');
 
     // Resep Routes
     Route::get('/resep', function () {

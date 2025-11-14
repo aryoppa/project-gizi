@@ -28,7 +28,7 @@
                             <div>
                                 <p class="text-muted mb-1 montserrat-medium">Total Visits</p>
                                 <div class="d-flex align-items-center justify-content-start gap-2">
-                                    <img src="/icons/stat_visits.png" alt="Visits Icon"
+                                    <img src="/icons/stat_total.png" alt="Visits Icon"
                                         style="width: 60px; height: 60px;">
                                     <h3 class="montserrat-bold mb-0">
                                         {{ $totalVisits ?? \App\Models\Visit::count() }}

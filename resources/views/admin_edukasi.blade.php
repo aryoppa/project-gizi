@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <x-layout-admin pageTitle="Edukasi Gizi">
+    <x-layout-admin pageTitle="Dashboard">
         <div class="container-fluid montserrat">
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -45,48 +45,33 @@
 
             <!-- Grid Edukasi -->
             <div class="row g-4 mb-5">
-                @for ($i = 1; $i <= 12; $i++)
-                    <div class="col-lg-3 col-md-6">
-                        <x-card-edukasi image="/img/food1.png" title="Apa itu gizi seimbang?" user="Admin"
-                            date="1 Nov 2025" :showActions="true" :id="$i" />
+                @forelse ($edukasis as $item)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        {{-- x-card-edukasi component: adjust props to what your component expects --}}
+                        <x-card-edukasi
+                            :image="$item->image ? asset('storage/' . $item->image) : asset('/img/placeholder.png')"
+                            :title="$item->title"
+                            :user="$item->author ?? 'Admin'"
+                            :date="$item->published_at ? $item->published_at->format('d M Y') : $item->created_at->format('d M Y')"
+                            :showActions="true"
+                            :id="$item->id"
+                        />
                     </div>
-                @endfor
+                @empty
+                    <div class="col-12">
+                        <div class="card p-4 text-center">
+                            <h5 class="mb-2">Belum ada edukasi.</h5>
+                            <p class="text-muted mb-0">Klik “Tambahkan Edukasi” untuk membuat konten baru.</p>
+                        </div>
+                    </div>
+                @endforelse
             </div>
 
             <!-- Pagination -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center align-items-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">67</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">68</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span class="montserrat-medium">Next</span>
-                            <i class="bi bi-chevron-right ms-1"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="d-flex justify-content-center">
+                {{-- Preserve query string on pagination links --}}
+                {{ $edukasis->appends(request()->query())->links() }}
+            </div>
         </div>
 
         <style>
