@@ -21,16 +21,19 @@
         <div class="container-fluid montserrat">
             <!-- Form Card -->
             <div class="form-card">
-                <h4 class="montserrat-bold mb-4">Tambah Edukasi Gizi</h4>
+                <h4 class="montserrat-bold mb-4">Edit Edukasi Gizi</h4>
 
-                <form action="{{ route('admin.edukasi.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.edukasi.update', $id ?? 1) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
 
                     <!-- Judul -->
                     <div class="mb-4">
                         <label for="judul" class="form-label montserrat-semibold">Judul</label>
                         <input type="text" class="form-control montserrat-regular" id="judul" name="judul"
-                            placeholder="Masukkan judul di sini" required value="{{ old('judul') }}">
+                            placeholder="Masukkan judul di sini" required
+                            value="{{ old('judul', 'Perencanaan Menu') }}">
                         @error('judul')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
@@ -48,8 +51,10 @@
                                     Upload
                                 </label>
                                 <input type="text" class="form-control file-display montserrat-regular"
-                                    id="fotoDisplay" placeholder="Masukkan foto" readonly>
+                                    id="fotoDisplay" placeholder="detail_edu1.png" readonly>
                             </div>
+                            <small class="text-muted montserrat-regular">Biarkan kosong jika tidak ingin mengubah
+                                foto</small>
                             @error('foto')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -57,17 +62,13 @@
 
                         <!-- Video -->
                         <div class="col-md-6">
-                            <label class="form-label montserrat-semibold">Video</label>
-                            <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="video" name="video" accept="video/*"
-                                    onchange="handleFileUpload(event, 'video')">
-                                <label for="video" class="btn-upload montserrat-semibold">
-                                    Upload
-                                </label>
-                                <input type="text" class="form-control file-display montserrat-regular"
-                                    id="videoDisplay" placeholder="Masukkan video" readonly>
-                            </div>
-                            @error('video')
+                            <label for="video_link" class="form-label montserrat-semibold">Video Link</label>
+                            <input type="url" class="form-control montserrat-regular" id="video_link"
+                                name="video_link" placeholder="https://youtube.com/watch?v=..."
+                                value="{{ old('video_link', 'https://youtube.com/watch?v=example') }}">
+                            <small class="text-muted montserrat-regular">Masukkan link YouTube atau video
+                                lainnya</small>
+                            @error('video_link')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -77,7 +78,18 @@
                     <div class="mb-4">
                         <label for="deskripsi" class="form-label montserrat-semibold">Deskripsi</label>
                         <textarea class="form-control montserrat-regular" id="deskripsi" name="deskripsi" rows="6"
-                            placeholder="Masukkan deskripsi di sini" required>{{ old('deskripsi') }}</textarea>
+                            placeholder="Masukkan deskripsi di sini" required>{{ old(
+                                'deskripsi',
+                                'Perencanaan menu merupakan kegiatan menyusun hidangan dalam variasi yang serisai untuk manajemen penyelenggaraan makanan di rumah tangga atau institusi.
+                                                        
+                                                        Fungsi perencanaan menu:
+                                                        • Memudahkan pelaksanaan tugas sehari-hari
+                                                        • Menyusun hidangan yang memenuhi kebutuhan zat gizi tubuh
+                                                        • Mengatur variasi dan kombinasi makanan
+                                                        • Menghindari kekurangan biaya/pengeluaran harga makanan
+                                                        • Penghemat waktu dan tenaga tersedia
+                                                        • Sebagai alat pemulihan gizi',
+                            ) }}</textarea>
                         @error('deskripsi')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
@@ -89,7 +101,7 @@
                             Batal
                         </a>
                         <button type="submit" class="btn btn-submit montserrat-semibold">
-                            Posting Edukasi
+                            Update Edukasi
                         </button>
                     </div>
                 </form>
@@ -172,18 +184,6 @@
             .file-display:focus {
                 border-color: #ddd !important;
                 box-shadow: none !important;
-            }
-
-            /* Video Input in Upload Box */
-            .upload-box .form-control {
-                border: none;
-                background: transparent;
-                padding: 0.5rem;
-                text-align: center;
-            }
-
-            .upload-box .form-control:focus {
-                box-shadow: none;
             }
 
             /* Buttons */
