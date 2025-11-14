@@ -30,7 +30,7 @@ class EdukasiController extends Controller
             'published_at' => 'nullable|date',
         ]);
 
-        dd($request->all());
+        // dd($request->all());
         $path = null;
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('img/edukasi', 'public');
@@ -60,12 +60,13 @@ class EdukasiController extends Controller
     public function update(Request $request, Edukasi $edukasi)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'title' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,jpg,png|max:4096',
-            'author' => 'nullable|string|max:255',
-            'published_at' => 'nullable|date',
+            'video_link' => 'nullable|string',
+            'description' => 'nullable|string'
         ]);
+
+        // dd($request->all());
 
         if ($request->hasFile('image')) {
             // delete old image if exists
@@ -75,9 +76,10 @@ class EdukasiController extends Controller
             $edukasi->image = $request->file('image')->store('img/edukasi', 'public');
         }
 
+        
         $edukasi->title = $request->title;
+        $edukasi->video_link = $request->video_link;
         $edukasi->description = $request->description;
-        $edukasi->author = $request->author;
         $edukasi->published_at = $request->published_at;
         $edukasi->save();
 
