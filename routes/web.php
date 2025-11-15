@@ -107,12 +107,16 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
     Route::put('/resep/{resep}', [ResepController::class, 'update'])->name('admin.resep.update');
     Route::delete('/resep/{resep}', [ResepController::class, 'destroy'])->name('admin.resep.destroy');
 
+    // Admin Dashboard View
     Route::get('/dashboard', function () {
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
         }
         // Ambil statistik visits untuk ditampilkan di dashboard
         $totalVisits = \App\Models\Visit::count();
+        $totaldokumentasi = \App\Models\Dokumentasi::count();
+        $totaledukasi = \App\Models\Edukasi::count();
+        $totalresep = \App\Models\Resep::count();
 
         $topPages = \App\Models\Visit::selectRaw('path, count(*) as hits')
             ->groupBy('path')
@@ -125,84 +129,14 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             ->groupBy('date')
             ->orderBy('date')
             ->get();
-            
-            return view('admin_dashboard', compact('totalVisits', 'topPages', 'visitsLast7'));
+
+            $dokumentasis     = \App\Models\Dokumentasi::latest()->take(4)->get();
+            $edukasis        = \App\Models\Edukasi::latest()->take(4)->get();
+            $reseps          = \App\Models\Resep::latest()->take(4)->get();
+
+            return view('admin_dashboard', compact('totalVisits', 'topPages', 'visitsLast7', 'dokumentasis', 'totaldokumentasi', 'totaledukasi', 'totalresep', 'edukasis', 'reseps'));
         })->name('admin.dashboard');
         
-        Route::get('/dokumentasi/{id}', function ($id) {
-            if (!session('admin_logged_in')) {
-                return redirect()->route('admin.login');
-            }
-            return view('admin_dokumentasi_detail');
-        })->name('admin.dokumentasi.show');
-    
-
-    // Resep Routes
-    // Route::get('/resep', function () {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-    //     return view('admin_resep');
-    // })->name('admin.resep.index');
-
-    // Route::get('/resep/create', function () {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-    //     return view('tambah_resep');
-    // })->name('admin.resep.create');
-
-    // Route::post('/resep/store', function (Request $request) {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-
-    //     // Validate
-    //     $request->validate([
-    //         'nama' => 'required|string|max:255',
-    //         'bahan' => 'required|string',
-    //         'cara_masak' => 'required|string',
-    //         'energi' => 'nullable|numeric',
-    //         'protein' => 'nullable|numeric',
-    //         'lemak' => 'nullable|numeric',
-    //         'karbohidrat' => 'nullable|numeric',
-    //         'gambar' => 'required|image|mimes:jpeg,jpg,png|max:2048'
-    //     ]);
-
-    //     // Handle file upload
-    //     if ($request->hasFile('gambar')) {
-    //         $image = $request->file('gambar');
-    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
-    //         $image->move(public_path('img/resep'), $imageName);
-
-    //     }
-
-    //     return redirect()->route('admin.resep.index')
-    //         ->with('success', 'Resep telah ditambahkan!');
-    // })->name('admin.resep.store');
-
-    // Route::get('/resep/{id}', function ($id) {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-    //     return view('admin_resep_detail');
-    // })->name('admin.resep.show');
-
-    // Route::get('/resep/{id}/edit', function ($id) {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-    //     return view('admin_resep_edit');
-    // })->name('admin.resep.edit');
-
-    // Route::delete('/resep/{id}', function ($id) {
-    //     if (!session('admin_logged_in')) {
-    //         return redirect()->route('admin.login');
-    //     }
-
-    //     return redirect()->route('admin.resep.index')
-    //         ->with('success', 'Resep berhasil dihapus!');
-    // })->name('admin.resep.destroy');
 
     // Logout
     Route::post('/logout', function () {

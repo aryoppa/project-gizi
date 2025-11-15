@@ -66,7 +66,9 @@
                                 <div class="d-flex align-items-center justify-content-start gap-2">
                                     <img src="/icons/stat_dokum.png" alt="Resep Icon"
                                         style="width: 60px; height: 60px;">
-                                    <h3 class="montserrat-bold mb-0">100</h3>
+                                    <h3 class="montserrat-bold mb-0">
+                                        {{ $totaldocumentation ?? \App\Models\Dokumentasi::count() }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +84,9 @@
                                 <div class="d-flex align-items-center justify-content-start gap-2">
                                     <img src="/icons/stat_edukasi.png" alt="Resep Icon"
                                         style="width: 60px; height: 60px;">
-                                    <h3 class="montserrat-bold mb-0">100</h3>
+                                    <h3 class="montserrat-bold mb-0">
+                                        {{ $totaleducation ?? \App\Models\Edukasi::count() }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +102,9 @@
                                 <div class="d-flex align-items-center justify-content-start gap-2">
                                     <img src="/icons/stat_resep.png" alt="Resep Icon"
                                         style="width: 60px; height: 60px;">
-                                    <h3 class="montserrat-bold mb-0">100</h3>
+                                    <h3 class="montserrat-bold mb-0">
+                                        {{ $totalresep ?? \App\Models\Resep::count() }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -117,14 +123,24 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        @for ($i = 1; $i <= 4; $i++)
+                        @forelse($dokumentasis as $dokumentasi)
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="documentation-item">
-                                    <img src="/img/dokum{{ $i }}.jpg" alt="Dokumentasi {{ $i }}"
-                                        class="img-fluid rounded">
+                                    <img 
+                                        src="{{ $dokumentasi->image ? asset('storage/' . $dokumentasi->image) : asset('/img/placeholder.png') }}"
+                                        alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}"
+                                        class="img-fluid rounded"
+                                    >
                                 </div>
                             </div>
-                        @endfor
+                        @empty
+                            <div class="col-12">
+                                <div class="card p-4 text-center">
+                                    <h5 class="mb-2">Belum ada dokumentasi.</h5>
+                                    <p class="text-muted mb-0">Klik “Tambahkan Dokumentasi" untuk membuat konten baru.</p>
+                                </div> 
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -139,12 +155,23 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-4">
-                        @for ($i = 1; $i <= 4; $i++)
+                        @forelse($edukasis as $edukasi)
                             <div class="col-lg-3 col-md-6">
-                                <x-card-edukasi image="/img/food1.png" title="Apa itu gizi seimbang?" user="Admin"
-                                    date="1 Nov 2025" />
+                                <x-card-edukasi 
+                                    :image="$edukasi->image ? asset('storage/' . $edukasi->image) : asset('/img/placeholder.png')"
+                                    :title="$edukasi->title"
+                                    :user="$edukasi->author ?? 'Admin'"
+                                    :date="$edukasi->published_at ? $edukasi->published_at->format('d M Y') : $edukasi->created_at->format('d M Y')"
+                                    :id="$edukasi->id" 
+                                    />
                             </div>
-                        @endfor
+                        @empty
+                            <div class="col-12">
+                                <div class="card p-4 text-center">
+                                    <h5 class="mb-2">Belum ada edukasi.</h5>
+                                    <p class="text-muted mb-0">Klik “Tambahkan Edukasi” untuk membuat konten baru.</p>
+                                </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -159,12 +186,26 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-4">
-                        @for ($i = 1; $i <= 4; $i++)
+                        @forelse($reseps as $resep)
                             <div class="col-lg-3 col-md-6">
-                                <x-card-resep image="/img/food2.jpg" title="Odeng Ayam" energy="121,35 kkal"
-                                    protein="7,62 g" fat="8,01 g" carbs="5,23 g" portion="10 Porsi" />
-                            </div>
-                        @endfor
+                                <x-card-resep 
+                                    :image="$resep->image ? asset('storage/' . $resep->image) : asset('/img/placeholder.png')"
+                                    :title="$resep->name"
+                                    :energy="$resep->energy"
+                                    :protein="$resep->protein"
+                                    :fat="$resep->fat"
+                                    :carbs="$resep->carbs"
+                                    :portion="$resep->portion"
+                                    :id="$resep->id"
+                                    />
+                            </div> 
+                        @empty
+                            <div class="col-12">
+                                <div class="card p-4 text-center">
+                                    <h5 class="mb-2">Belum ada resep.</h5>
+                                    <p class="text-muted mb-0">Klik “Tambahkan Resep" untuk membuat konten baru.</p>
+                                </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
