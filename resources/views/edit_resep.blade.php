@@ -23,58 +23,53 @@
             <div class="form-card">
                 <h4 class="montserrat-bold mb-4">Edit Resep Makanan</h4>
 
-                <form action="{{ route('admin.resep.update', $id ?? 1) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.resep.update', $resep->id) }}" method="POST" 
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <!-- Nama Makanan & Foto -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="nama_makanan" class="form-label montserrat-semibold">Nama Makanan</label>
-                            <input type="text" class="form-control montserrat-regular" id="nama_makanan"
-                                name="nama_makanan" placeholder="Nama Makanan" required
-                                value="{{ old('nama_makanan', 'Odeng Ayam') }}">
-                            @error('nama_makanan')
+                            <label for="name" class="form-label montserrat-semibold">Nama Makanan</label>
+                            <input type="text" class="form-control montserrat-regular" id="name"
+                                name="name" placeholder="Nama Makanan" required
+                                value="{{ old('name', $resep->name) }}">
+                            @error('name')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label montserrat-semibold">Foto</label>
-                            <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="foto" name="foto" accept="image/*"
-                                    onchange="handleFileUpload(event, 'foto')">
-                                <label for="foto" class="btn-upload montserrat-semibold">
-                                    Upload
-                                </label>
-                                <input type="text" class="form-control file-display montserrat-regular"
-                                    id="fotoDisplay" placeholder="food2.jpg" readonly>
+                            <label for="image" class="form-label montserrat-semibold">Gambar (opsional)</label>
+                            <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                            <small class="text-muted">Support PNG, JPG, JPEG. Maks 4MB.</small>
+
+                            {{-- preview area --}}
+                            <div id="imagePreviewWrapper" class="mt-3" style="display: {{ $resep->image ? 'block' : 'none' }};">
+                                <p class="small mb-1">Preview Gambar:</p>
+                                <img id="imagePreview" src="{{ $resep->image ? asset('storage/' . $resep->image) : '' }}" alt="preview" style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                             </div>
-                            <small class="text-muted montserrat-regular">Biarkan kosong jika tidak ingin mengubah
-                                foto</small>
-                            @error('foto')
-                                <div class="text-danger mt-1 small">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
 
                     <!-- Jumlah Porsi, Energi, Protein -->
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <label for="jumlah_porsi" class="form-label montserrat-semibold">Jumlah Porsi</label>
-                            <input type="text" class="form-control montserrat-regular" id="jumlah_porsi"
-                                name="jumlah_porsi" placeholder="Jumlah Porsi" required
-                                value="{{ old('jumlah_porsi', '10 Porsi') }}">
-                            @error('jumlah_porsi')
+                            <label for="portion" class="form-label montserrat-semibold">Jumlah Porsi</label>
+                            <input type="text" class="form-control montserrat-regular" id="portion"
+                                name="portion" placeholder="Jumlah Porsi" required
+                                value="{{ old('portion', $resep->portion) }}">
+                            @error('portion')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-4">
-                            <label for="energi" class="form-label montserrat-semibold">Energi</label>
-                            <input type="text" class="form-control montserrat-regular" id="energi" name="energi"
-                                placeholder="Energi" required value="{{ old('energi', '121,35 kkal') }}">
-                            @error('energi')
+                            <label for="energy" class="form-label montserrat-semibold">Energi</label>
+                            <input type="text" class="form-control montserrat-regular" id="energy" name="energy"
+                                placeholder="Energi" required value="{{ old('energy', $resep->energy) }}">
+                            @error('energy')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -82,7 +77,7 @@
                         <div class="col-md-4">
                             <label for="protein" class="form-label montserrat-semibold">Protein</label>
                             <input type="text" class="form-control montserrat-regular" id="protein" name="protein"
-                                placeholder="Protein" required value="{{ old('protein', '7,62 g') }}">
+                                placeholder="Protein" required value="{{ old('protein', $resep->protein) }}">
                             @error('protein')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -92,20 +87,20 @@
                     <!-- Lemak & Karbohidrat -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="lemak" class="form-label montserrat-semibold">Lemak</label>
-                            <input type="text" class="form-control montserrat-regular" id="lemak" name="lemak"
-                                placeholder="Lemak" required value="{{ old('lemak', '8,01 g') }}">
-                            @error('lemak')
+                            <label for="fat" class="form-label montserrat-semibold">Lemak</label>
+                            <input type="text" class="form-control montserrat-regular" id="fat" name="fat"
+                                placeholder="Lemak" required value="{{ old('fat', $resep->fat) }}">
+                            @error('fat')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label for="karbohidrat" class="form-label montserrat-semibold">Karbohidrat</label>
-                            <input type="text" class="form-control montserrat-regular" id="karbohidrat"
-                                name="karbohidrat" placeholder="Karbohidrat" required
-                                value="{{ old('karbohidrat', '5,23 g') }}">
-                            @error('karbohidrat')
+                            <label for="carbs" class="form-label montserrat-semibold">Karbohidrat</label>
+                            <input type="text" class="form-control montserrat-regular" id="carbs"
+                                name="carbs" placeholder="Karbohidrat" required
+                                value="{{ old('carbs', $resep->carbs) }}">
+                            @error('carbs')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -114,42 +109,24 @@
                     <!-- Bahan & Alat-Alat -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="bahan" class="form-label montserrat-semibold">Bahan</label>
-                            <textarea class="form-control montserrat-regular" id="bahan" name="bahan" rows="6" placeholder="Bahan"
+                            <label for="ingridients" class="form-label montserrat-semibold">Bahan</label>
+                            <textarea class="form-control montserrat-regular" id="ingridients" name="ingridients" rows="6" placeholder="Bahan"
                                 required>{{ old(
-                                    'bahan',
-                                    '250 g ayam fillet
-                                1 batang bawang daun halus
-                                1/2 bawang bombay, cincang
-                                1 batang seledri, rajang
-                                1 putih telur
-                                1/2 sdt bubuk penyedap
-                                1/2 sdt garam halus
-                                2 sdt saus ayam
-                                3 sdm tapioka
-                                3 sdm minyak ayam
-                                1 buah wortel
-                                4 lembar kembang tahu',
+                                    'ingridients', $resep->ingridients
                                 ) }}</textarea>
-                            @error('bahan')
+                            @error('ingridients')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label for="alat_alat" class="form-label montserrat-semibold">Alat-Alat</label>
-                            <textarea class="form-control montserrat-regular" id="alat_alat" name="alat_alat" rows="6"
+                            <label for="tools" class="form-label montserrat-semibold">Alat-Alat</label>
+                            <textarea class="form-control montserrat-regular" id="tools" name="tools" rows="6"
                                 placeholder="Alat-alat" required>{{ old(
-                                    'alat_alat',
-                                    'Chopper/blender
-                                Mangkuk besar/baskom
-                                Spatula/sendok
-                                Talenan dan pisau
-                                Tusuk sate
-                                Panci kukus
-                                Panci penggorengan',
+                                    'tools',
+                                    $resep->tools
                                 ) }}</textarea>
-                            @error('alat_alat')
+                            @error('tools')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -157,19 +134,13 @@
 
                     <!-- Cara Pembuatan -->
                     <div class="mb-4">
-                        <label for="cara_pembuatan" class="form-label montserrat-semibold">Cara Pembuatan</label>
-                        <textarea class="form-control montserrat-regular" id="cara_pembuatan" name="cara_pembuatan" rows="8"
+                        <label for="how_to" class="form-label montserrat-semibold">Cara Pembuatan</label>
+                        <textarea class="form-control montserrat-regular" id="how_to" name="how_to" rows="8"
                             placeholder="Cara Pembuatan" required>{{ old(
-                                'cara_pembuatan',
-                                'Haluskan daging, masukkan daging ayam, putih telur, bawang putih, garam, gula, dan bubuk ke dalam chopper atau blender
-                            Masukkan tapioca, parutan wortel, dan irisan daun bawang menggunakan spatula hingga tercampur sempurna
-                            Siapkan kembang tahu, ambil adonan ayam dan wortel, oleskan secara tipis dan merata di atas kembang tahu
-                            Lipat memanjang kemudian tusuk dengan tusuk sate
-                            Kemudian kukus odeng selama 20 hingga 30 menit
-                            Siapkan odeng yang telah dikukus ke dalam minyak panas dengan api sedang, dan goreng hingga kuning keemasan
-                            Angkat odeng dan tiriskan',
+                                'how_to',
+                                $resep->how_to
                             ) }}</textarea>
-                        @error('cara_pembuatan')
+                        @error('how_to')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>

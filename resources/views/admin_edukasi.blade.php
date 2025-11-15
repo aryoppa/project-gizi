@@ -24,10 +24,7 @@
                 <h4 class="montserrat-extrabold mb-0">Edukasi Gizi</h4>
                 <div class="d-flex gap-2">
                     <!-- Search Box -->
-                    <div class="search-box">
-                        <input type="text" class="form-control montserrat-regular" placeholder="Search text">
-                        <i class="bi bi-search"></i>
-                    </div>
+                    
                     <!-- Button Add -->
                     <a href="{{ route('admin.edukasi.create') }}" class="btn btn-add montserrat-semibold">
                         Tambahkan Edukasi

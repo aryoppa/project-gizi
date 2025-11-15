@@ -24,10 +24,10 @@
                 <h4 class="montserrat-extrabold mb-0">Resep Makanan</h4>
                 <div class="d-flex gap-2">
                     <!-- Search Box -->
-                    <div class="search-box">
+                    <!-- <div class="search-box">
                         <input type="text" class="form-control montserrat-regular" placeholder="Search text">
                         <i class="bi bi-search"></i>
-                    </div>
+                    </div> -->
                     <!-- Button Add -->
                     <a href="{{ route('admin.resep.create') }}" class="btn btn-add montserrat-semibold">
                         Tambahkan Resep
@@ -45,16 +45,38 @@
 
             <!-- Grid Resep -->
             <div class="row g-4 mb-5">
-                @for ($i = 1; $i <= 12; $i++)
+                @forelse($reseps as $resep)
                     <div class="col-lg-3 col-md-6">
-                        <x-card-resep image="/img/food2.jpg" title="Odeng Ayam" energy="121,35 kkal" protein="7,62 g"
-                            fat="8,01 g" carbs="5,23 g" portion="10 Porsi" :showActions="true" :id="$i" />
+                        <x-card-resep
+                            :image="$resep->image ? asset('storage/' . $resep->image) : asset('/img/placeholder.png')"
+                            :title="$resep->name"
+                            :energy="$resep->energy"
+                            :protein="$resep->protein"
+                            :fat="$resep->fat"
+                            :carbs="$resep->carbs"
+                            :portion="$resep->portion"
+                            :showActions="true"
+                            :id="$resep->id"
+                        />
                     </div>
-                @endfor
+                @empty
+                    <div class="col-12">
+                        <div class="card p-4 text-center">
+                            <h5 class="mb-2">Belum ada resep.</h5>
+                            <p class="text-muted mb-0">Klik “Tambahkan Resep" untuk membuat konten baru.</p>
+                        </div>
+                    </div>
+                @endforelse
             </div>
 
             <!-- Pagination -->
-            <nav aria-label="Page navigation">
+            <div class="d-flex justify-content-center">
+                {{-- Preserve query string on pagination links --}}
+                {{ $reseps->appends(request()->query())->links() }}
+            </div>
+
+            <!-- Pagination -->
+            <!-- <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center align-items-center">
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous">
@@ -86,7 +108,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
 
         <style>

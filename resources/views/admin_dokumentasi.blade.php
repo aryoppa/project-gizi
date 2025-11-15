@@ -73,7 +73,12 @@
                         </div>
                     </div>
                 @empty
-                    <p class="text-center text-muted mt-4">Belum ada dokumentasi yang diupload.</p>
+                    <div class="col-12">
+                        <div class="card p-4 text-center">
+                            <h5 class="mb-2">Belum ada dokumentasi.</h5>
+                            <p class="text-muted mb-0">Klik “Tambahkan Dokumentasi" untuk membuat konten baru.</p>
+                        </div>
+                    </div>
                 @endforelse
             </div>
 

@@ -29,11 +29,11 @@
                     <!-- Nama Makanan & Foto -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="nama_makanan" class="form-label montserrat-semibold">Nama Makanan</label>
-                            <input type="text" class="form-control montserrat-regular" id="nama_makanan"
-                                name="nama_makanan" placeholder="Nama Makanan" required
-                                value="{{ old('nama_makanan') }}">
-                            @error('nama_makanan')
+                            <label for="name" class="form-label montserrat-semibold">Nama Makanan</label>
+                            <input type="text" class="form-control montserrat-regular" id="name"
+                                name="name" placeholder="Nama Makanan" required
+                                value="{{ old('name') }}">
+                            @error('name')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -41,15 +41,15 @@
                         <div class="col-md-6">
                             <label class="form-label montserrat-semibold">Foto</label>
                             <div class="upload-wrapper">
-                                <input type="file" class="d-none" id="foto" name="foto" accept="image/*"
-                                    onchange="handleFileUpload(event, 'foto')">
-                                <label for="foto" class="btn-upload montserrat-semibold">
+                                <input type="file" class="d-none" id="image" name="image" accept="image/*"
+                                    onchange="handleFileUpload(event, 'image')">
+                                <label for="image" class="btn-upload montserrat-semibold">
                                     Upload
                                 </label>
                                 <input type="text" class="form-control file-display montserrat-regular"
                                     id="fotoDisplay" placeholder="" readonly>
                             </div>
-                            @error('foto')
+                            @error('image')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -58,20 +58,20 @@
                     <!-- Jumlah Porsi, Energi, Protein -->
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <label for="jumlah_porsi" class="form-label montserrat-semibold">Jumlah Porsi</label>
-                            <input type="text" class="form-control montserrat-regular" id="jumlah_porsi"
-                                name="jumlah_porsi" placeholder="Jumlah Porsi" required
-                                value="{{ old('jumlah_porsi') }}">
-                            @error('jumlah_porsi')
+                            <label for="portion" class="form-label montserrat-semibold">Jumlah Porsi</label>
+                            <input type="text" class="form-control montserrat-regular" id="portion"
+                                name="portion" placeholder="Jumlah Porsi" required
+                                value="{{ old('portion') }}">
+                            @error('portion')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-4">
-                            <label for="energi" class="form-label montserrat-semibold">Energi</label>
-                            <input type="text" class="form-control montserrat-regular" id="energi" name="energi"
-                                placeholder="Energi" required value="{{ old('energi') }}">
-                            @error('energi')
+                            <label for="energy" class="form-label montserrat-semibold">Energi</label>
+                            <input type="text" class="form-control montserrat-regular" id="energy" name="energy"
+                                placeholder="Energi" required value="{{ old('energy') }}">
+                            @error('energy')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -89,20 +89,20 @@
                     <!-- Lemak & Karbohidrat -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="lemak" class="form-label montserrat-semibold">Lemak</label>
-                            <input type="text" class="form-control montserrat-regular" id="lemak" name="lemak"
-                                placeholder="Lemak" required value="{{ old('lemak') }}">
-                            @error('lemak')
+                            <label for="fat" class="form-label montserrat-semibold">Lemak</label>
+                            <input type="text" class="form-control montserrat-regular" id="fat" name="fat"
+                                placeholder="Lemak" required value="{{ old('lemfatak') }}">
+                            @error('fat')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label for="karbohidrat" class="form-label montserrat-semibold">Karbohidrat</label>
-                            <input type="text" class="form-control montserrat-regular" id="karbohidrat"
-                                name="karbohidrat" placeholder="Karbohidrat" required
-                                value="{{ old('karbohidrat') }}">
-                            @error('karbohidrat')
+                            <label for="carbs" class="form-label montserrat-semibold">Karbohidrat</label>
+                            <input type="text" class="form-control montserrat-regular" id="carbs"
+                                name="carbs" placeholder="Karbohidrat" required
+                                value="{{ old('carbs') }}">
+                            @error('carbs')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -111,19 +111,19 @@
                     <!-- Bahan & Alat-Alat -->
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <label for="bahan" class="form-label montserrat-semibold">Bahan</label>
-                            <textarea class="form-control montserrat-regular" id="bahan" name="bahan" rows="6" placeholder="Bahan"
-                                required>{{ old('bahan') }}</textarea>
-                            @error('bahan')
+                            <label for="ingridients" class="form-label montserrat-semibold">Bahan</label>
+                            <textarea class="form-control montserrat-regular" id="ingridients" name="ingridients" rows="6" placeholder="Bahan"
+                                required>{{ old('ingridients') }}</textarea>
+                            @error('ingridients')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label for="alat_alat" class="form-label montserrat-semibold">Alat-Alat</label>
-                            <textarea class="form-control montserrat-regular" id="alat_alat" name="alat_alat" rows="6"
-                                placeholder="Alat-alat" required>{{ old('alat_alat') }}</textarea>
-                            @error('alat_alat')
+                            <label for="tools" class="form-label montserrat-semibold">Alat-Alat</label>
+                            <textarea class="form-control montserrat-regular" id="tools" name="tools" rows="6"
+                                placeholder="Alat-alat" required>{{ old('tools') }}</textarea>
+                            @error('tools')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
                         </div>
@@ -131,10 +131,10 @@
 
                     <!-- Cara Pembuatan -->
                     <div class="mb-4">
-                        <label for="cara_pembuatan" class="form-label montserrat-semibold">Cara Pembuatan</label>
-                        <textarea class="form-control montserrat-regular" id="cara_pembuatan" name="cara_pembuatan" rows="8"
-                            placeholder="Cara Pembuatan" required>{{ old('cara_pembuatan') }}</textarea>
-                        @error('cara_pembuatan')
+                        <label for="how_to" class="form-label montserrat-semibold">Cara Pembuatan</label>
+                        <textarea class="form-control montserrat-regular" id="how_to" name="how_to" rows="8"
+                            placeholder="Cara Pembuatan" required>{{ old('how_to') }}</textarea>
+                        @error('how_to')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
                     </div>

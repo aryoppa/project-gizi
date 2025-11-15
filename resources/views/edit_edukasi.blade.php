@@ -48,30 +48,30 @@
                         @enderror
                     </div> -->
                     <div class="mb-3">
-                                <label for="image" class="form-label montserrat-semibold">Gambar (opsional)</label>
-                                <input id="image" name="image" type="file" class="form-control" accept="image/*">
-                                <small class="text-muted">Support PNG, JPG, JPEG. Maks 4MB.</small>
+                        <label for="image" class="form-label montserrat-semibold">Gambar (opsional)</label>
+                        <input id="image" name="image" type="file" class="form-control" accept="image/*">
+                        <small class="text-muted">Support PNG, JPG, JPEG. Maks 4MB.</small>
 
-                                {{-- preview area --}}
-                                <div id="imagePreviewWrapper" class="mt-3" style="display: {{ $edukasi->image ? 'block' : 'none' }};">
-                                    <p class="small mb-1">Preview Gambar:</p>
-                                    <img id="imagePreview" src="{{ $edukasi->image ? asset('storage/' . $edukasi->image) : '' }}" alt="preview" style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-                                </div>
+                        {{-- preview area --}}
+                        <div id="imagePreviewWrapper" class="mt-3" style="display: {{ $edukasi->image ? 'block' : 'none' }};">
+                            <p class="small mb-1">Preview Gambar:</p>
+                            <img id="imagePreview" src="{{ $edukasi->image ? asset('storage/' . $edukasi->image) : '' }}" alt="preview" style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="video_link" class="form-label montserrat-semibold">Link Video (YouTube / Google Drive)</label>
+                        <input id="video_link" name="video_link" type="url" class="form-control" value="{{ old('video_link', $edukasi->video_link) }}">
+                        <small class="text-muted">Masukkan link YouTube atau Google Drive. Sistem akan mencoba menampilkan preview embed.</small>
+
+                        {{-- video preview --}}
+                        <div id="videoPreviewWrapper" class="mt-3" style="display: none;">
+                            <p class="small mb-1">Preview Video:</p>
+                            <div id="videoEmbed" class="ratio ratio-16x9">
+                                {{-- iframe akan di-inject oleh JS --}}
                             </div>
-
-                            <div class="mb-3">
-                                <label for="video_link" class="form-label montserrat-semibold">Link Video (YouTube / Google Drive)</label>
-                                <input id="video_link" name="video_link" type="url" class="form-control" value="{{ old('video_link', $edukasi->video_link) }}">
-                                <small class="text-muted">Masukkan link YouTube atau Google Drive. Sistem akan mencoba menampilkan preview embed.</small>
-
-                                {{-- video preview --}}
-                                <div id="videoPreviewWrapper" class="mt-3" style="display: none;">
-                                    <p class="small mb-1">Preview Video:</p>
-                                    <div id="videoEmbed" class="ratio ratio-16x9">
-                                        {{-- iframe akan di-inject oleh JS --}}
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
                     <!-- Foto -->
                     <!-- <div class="row mb-4"> -->
                         <!-- Foto -->
