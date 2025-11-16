@@ -67,50 +67,7 @@
             <x-carousel 
                 type="edukasi"
                 carouselId="edukasiCarousel"
-                :items="collect([
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/1'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/2'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/3'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/4'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/5'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/6'
-                    ]
-                ])" 
+                :items="$carouselItems"
             />
         </div>
     </section>
@@ -134,71 +91,10 @@
                 </div>
             </div>
 
-            <x-carousel 
+           <x-carousel 
                 type="resep"
                 carouselId="resepCarousel"
-                :items="collect([
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/1'
-                    ],
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/2'
-                    ],
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/3'
-                    ],
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/4'
-                    ],
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/5'
-                    ],
-                    [
-                        'image' => '/img/food2.jpg',
-                        'title' => 'Odeng Ayam',
-                        'energy' => '121,35 kkal',
-                        'protein' => '7,62 g',
-                        'fat' => '8,01 g',
-                        'carbs' => '5,23g',
-                        'portion' => '10 Porsi',
-                        'link' => '/resep/6'
-                    ]
-                ])" 
+                :items="$resepItems"
             />
         </div>
     </section>
@@ -325,40 +221,8 @@
                 </h2>
             </div>
 
-            <x-carousel-dokumentasi :items="collect([
-                [
-                    'image' => '/img/dokum1.jpg',
-                    'title' => 'Sosialisasi Program SEMAI',
-                ],
-                [
-                    'image' => '/img/dokum2.jpg',
-                    'title' => 'Workshop Gizi Seimbang',
-                ],
-                [
-                    'image' => '/img/dokum3.jpg',
-                    'title' => 'Praktek Memasak Sehat',
-                ],
-                [
-                    'image' => '/img/dokum4.jpg',
-                    'title' => 'Edukasi Cuci Tangan',
-                ],
-                [
-                    'image' => '/img/dokum5.jpg',
-                    'title' => 'Penimbangan Rutin',
-                ],
-                [
-                    'image' => '/img/dokum1.jpg',
-                    'title' => 'Kegiatan Outdoor',
-                ],
-                [
-                    'image' => '/img/dokum2.jpg',
-                    'title' => 'Lomba Makan Sehat',
-                ],
-                [
-                    'image' => '/img/dokum3.jpg',
-                    'title' => 'Pelatihan Guru',
-                ]
-            ])" />
+            
+            <x-carousel-dokumentasi :items="$dokItems" />
         </div>
     </section>
 

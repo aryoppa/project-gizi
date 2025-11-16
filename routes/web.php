@@ -5,10 +5,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DokumentasiController;
 use App\Http\Controllers\Admin\EdukasiController;
 use App\Http\Controllers\Admin\ResepController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/tentang_kami', function () {
     return view('tentang_kami');
@@ -44,7 +43,7 @@ Route::get('/admin_login', function () {
 
 // Public routes — dihitung oleh middleware
 Route::middleware(['web', 'count.visitor'])->group(function () {
-    Route::get('/', function () { return view('home'); });
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('/tentang_kami', function () { return view('tentang_kami'); });
 
