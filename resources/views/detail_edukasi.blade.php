@@ -55,7 +55,7 @@
                     </h1>
                     
                     <p class="montserrat-regular mb-4" style="line-height: 1.8; text-align: justify;">
-                        {{$edukasi->description}}
+                        {!! $edukasi->description !!}
                     </p>
 
                 </div>
@@ -75,7 +75,7 @@
             <x-carousel 
                 type="edukasi"
                 carouselId="edukasiCarousel"
-                :items="$edukasis" 
+                :items="$edukasis"
             />
         </div>
     </section>

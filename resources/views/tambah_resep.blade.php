@@ -52,6 +52,13 @@
                             @error('image')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
+                            {{-- preview area --}}
+                            <!-- Preview -->
+                            <div id="imagePreviewWrapper" class="mt-3" style="display:none;">
+                                <p class="small mb-1">Preview Gambar:</p>
+                                <img id="imagePreview" src="" alt="preview"
+                                    style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                            </div>
                         </div>
                     </div>
 
@@ -112,8 +119,8 @@
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label for="ingridients" class="form-label montserrat-semibold">Bahan</label>
-                            <textarea class="form-control montserrat-regular" id="ingridients" name="ingridients" rows="6" placeholder="Bahan"
-                                required>{{ old('ingridients') }}</textarea>
+                            <textarea class="form-control montserrat-regular rich-editor"
+                                    id="ingridients" name="ingridients" rows="6" placeholder="Bahan" required>{{ old('ingridients', $resep->ingridients ?? '') }}</textarea>
                             @error('ingridients')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -121,8 +128,8 @@
 
                         <div class="col-md-6">
                             <label for="tools" class="form-label montserrat-semibold">Alat-Alat</label>
-                            <textarea class="form-control montserrat-regular" id="tools" name="tools" rows="6"
-                                placeholder="Alat-alat" required>{{ old('tools') }}</textarea>
+                            <textarea class="form-control montserrat-regular rich-editor"
+                                    id="tools" name="tools" rows="6" placeholder="Alat-alat" required>{{ old('tools', $resep->tools ?? '') }}</textarea>
                             @error('tools')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -132,8 +139,8 @@
                     <!-- Cara Pembuatan -->
                     <div class="mb-4">
                         <label for="how_to" class="form-label montserrat-semibold">Cara Pembuatan</label>
-                        <textarea class="form-control montserrat-regular" id="how_to" name="how_to" rows="8"
-                            placeholder="Cara Pembuatan" required>{{ old('how_to') }}</textarea>
+                        <textarea class="form-control montserrat-regular rich-editor"
+                                id="how_to" name="how_to" rows="8" placeholder="Cara Pembuatan" required>{{ old('how_to', $resep->how_to ?? '') }}</textarea>
                         @error('how_to')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
@@ -276,16 +283,119 @@
                 }
             }
         </style>
+        <script src="https://cdn.tiny.cloud/1/06j39ntlnntfujthu7flj562820g5pgt5jxd3duhclmj5nuo/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
         <script>
-            function handleFileUpload(event, type) {
-                const file = event.target.files[0];
-                if (file) {
-                    const fileName = file.name;
-                    const fileDisplay = document.getElementById(type + 'Display');
-                    fileDisplay.value = fileName;
+        document.addEventListener('DOMContentLoaded', function () {
+        tinymce.init({
+            selector: 'textarea.rich-editor',
+            height: 300,
+            menubar: false,
+            plugins: [
+            'advlist autolink lists link image charmap preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic underline | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | link image media | removeformat | code',
+            content_style: "body { font-family: Montserrat, Arial, sans-serif; font-size:14px }",
+            // optional: set relative_urls to false so inserted images/links become absolute
+            relative_urls: false,
+            convert_urls: true,
+            remove_script_host: false,
+            // enable paste as text? you can set paste_as_text: true if desired
+        });
+        });
+        </script>
+
+        <script>
+            // image upload preview
+            function handleFileUpload(event) {
+                const input = event.target;
+                const file = input.files[0];
+
+                const previewWrapper = document.getElementById('imagePreviewWrapper');
+                const previewImg = document.getElementById('imagePreview');
+                const fileDisplay = document.getElementById('fotoDisplay');
+
+                if (!file) {
+                    // No file selected → hide preview
+                    fileDisplay.value = "";
+                    previewWrapper.style.display = "none";
+                    previewImg.src = "";
+                    return;
                 }
+
+                // Show file name
+                fileDisplay.value = file.name;
+
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewWrapper.style.display = "block";
+                };
+                reader.readAsDataURL(file);
             }
+            // video preview helper: normalize common links to embed URL
+            function normalizeVideoLink(url) {
+                if (!url) return null;
+
+                // Google Drive file link -> preview
+                const driveFile = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+                if (driveFile) {
+                    return `https://drive.google.com/file/d/${driveFile[1]}/preview`;
+                }
+
+                // Google Drive "open?id=" -> preview
+                const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+                if (driveOpen) {
+                    return `https://drive.google.com/file/d/${driveOpen[1]}/preview`;
+                }
+
+                // YouTube watch?v= or youtu.be -> embed
+                const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+                if (yt) {
+                    return `https://www.youtube.com/embed/${yt[1]}`;
+                }
+
+                // If already an embed URL, return as is
+                if (url.includes('youtube.com/embed') || url.includes('drive.google.com')) return url;
+
+                return null; // unknown
+            }
+
+            const videoLinkInput = document.getElementById('video_link');
+            const videoPreviewWrapper = document.getElementById('videoPreviewWrapper');
+            const videoEmbed = document.getElementById('videoEmbed');
+
+            function updateVideoPreviewFromValue(value) {
+                const embedUrl = normalizeVideoLink(value);
+                if (!embedUrl) {
+                    videoPreviewWrapper.style.display = 'none';
+                    videoEmbed.innerHTML = '';
+                    return;
+                }
+
+                videoEmbed.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>`;
+                videoPreviewWrapper.style.display = 'block';
+            }
+
+            // initial: if value present from server, show preview
+            document.addEventListener('DOMContentLoaded', function() {
+                const initialVideo = videoLinkInput.value;
+                if (initialVideo) updateVideoPreviewFromValue(initialVideo);
+            });
+
+            videoLinkInput.addEventListener('blur', function(e) {
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
+
+            videoLinkInput.addEventListener('input', function(e) {
+                // live preview while typing -- optional, comment out if noisy
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
         </script>
     </x-layout-admin>
 </body>

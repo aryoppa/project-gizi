@@ -44,6 +44,13 @@
                         @error('video_link')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
+                        {{-- video preview --}}
+                        <div id="videoPreviewWrapper" class="mt-3" style="display: none;">
+                            <p class="small mb-1">Preview Video:</p>
+                            <div id="videoEmbed" class="ratio ratio-16x9">
+                                {{-- iframe akan di-inject oleh JS --}}
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Foto -->
@@ -63,16 +70,25 @@
                             @error('image')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
+                            {{-- preview area --}}
+                            <!-- Preview -->
+                            <div id="imagePreviewWrapper" class="mt-3" style="display:none;">
+                                <p class="small mb-1">Preview Gambar:</p>
+                                <img id="imagePreview" src="" alt="preview"
+                                    style="max-width:300px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                            </div>
                         </div>
 
                         
                     </div>
 
-                    <!-- Deskripsi -->
+                    <!-- Deskripsi (rich text editor) -->
                     <div class="mb-4">
                         <label for="description" class="form-label montserrat-semibold">Deskripsi</label>
-                        <textarea class="form-control montserrat-regular" id="description" name="description" rows="6"
-                            placeholder="Masukkan deskripsi di sini" required>{{ old('description') }}</textarea>
+
+                        <!-- keep the name "description" so controller menerima input HTML -->
+                        <textarea id="description" name="description" class="form-control montserrat-regular" rows="10" placeholder="Masukkan deskripsi di sini" required>{{ old('description', $edukasi->description ?? '') }}</textarea>
+
                         @error('description')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror
@@ -230,14 +246,115 @@
         </style>
 
         <script>
-            function handleFileUpload(event, type) {
-                const file = event.target.files[0];
-                if (file) {
-                    const fileName = file.name;
-                    const fileDisplay = document.getElementById(type + 'Display');
-                    fileDisplay.value = fileName;
+            // image upload preview
+            function handleFileUpload(event) {
+                const input = event.target;
+                const file = input.files[0];
+
+                const previewWrapper = document.getElementById('imagePreviewWrapper');
+                const previewImg = document.getElementById('imagePreview');
+                const fileDisplay = document.getElementById('fotoDisplay');
+
+                if (!file) {
+                    // No file selected → hide preview
+                    fileDisplay.value = "";
+                    previewWrapper.style.display = "none";
+                    previewImg.src = "";
+                    return;
                 }
+
+                // Show file name
+                fileDisplay.value = file.name;
+
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewWrapper.style.display = "block";
+                };
+                reader.readAsDataURL(file);
             }
+            // video preview helper: normalize common links to embed URL
+            function normalizeVideoLink(url) {
+                if (!url) return null;
+
+                // Google Drive file link -> preview
+                const driveFile = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+                if (driveFile) {
+                    return `https://drive.google.com/file/d/${driveFile[1]}/preview`;
+                }
+
+                // Google Drive "open?id=" -> preview
+                const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+                if (driveOpen) {
+                    return `https://drive.google.com/file/d/${driveOpen[1]}/preview`;
+                }
+
+                // YouTube watch?v= or youtu.be -> embed
+                const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+                if (yt) {
+                    return `https://www.youtube.com/embed/${yt[1]}`;
+                }
+
+                // If already an embed URL, return as is
+                if (url.includes('youtube.com/embed') || url.includes('drive.google.com')) return url;
+
+                return null; // unknown
+            }
+
+            const videoLinkInput = document.getElementById('video_link');
+            const videoPreviewWrapper = document.getElementById('videoPreviewWrapper');
+            const videoEmbed = document.getElementById('videoEmbed');
+
+            function updateVideoPreviewFromValue(value) {
+                const embedUrl = normalizeVideoLink(value);
+                if (!embedUrl) {
+                    videoPreviewWrapper.style.display = 'none';
+                    videoEmbed.innerHTML = '';
+                    return;
+                }
+
+                videoEmbed.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>`;
+                videoPreviewWrapper.style.display = 'block';
+            }
+
+            // initial: if value present from server, show preview
+            document.addEventListener('DOMContentLoaded', function() {
+                const initialVideo = videoLinkInput.value;
+                if (initialVideo) updateVideoPreviewFromValue(initialVideo);
+            });
+
+            videoLinkInput.addEventListener('blur', function(e) {
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
+
+            videoLinkInput.addEventListener('input', function(e) {
+                // live preview while typing -- optional, comment out if noisy
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
+        </script>
+        <!-- TinyMCE CDN + init -->
+        <script src="https://cdn.tiny.cloud/1/06j39ntlnntfujthu7flj562820g5pgt5jxd3duhclmj5nuo/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        tinymce.init({
+            selector: '#description',
+            height: 320,
+            menubar: false,
+            plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic underline | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | link image media | removeformat | code',
+            content_style: "body { font-family:montserrat, Arial, sans-serif; font-size:14px }",
+            // optional: enable images upload handler if you want to upload images through tinyMCE
+            // images_upload_url: '/upload-image-endpoint',
+            // images_upload_handler: function (blobInfo, success, failure) { ... }
+        });
+        });
         </script>
     </x-layout-admin>
 </body>

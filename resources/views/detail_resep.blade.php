@@ -83,9 +83,7 @@
                         <div id="bahan" class="accordion-collapse collapse show">
                             <div class="accordion-body montserrat-regular" style="background-color: #fff; padding: 0.5rem 1.5rem;">
                                 <ol style="padding-left: 1.2rem; line-height: 2;">
-                                    {{
-                                        $resep->ingridients
-                                    }}
+                                    {!! $resep->ingridients !!}
                                 </ol>
                             </div>
                         </div>
@@ -106,9 +104,7 @@
                             <div id="bahan" class="accordion-collapse collapse show">
                                 <div class="accordion-body montserrat-regular" style="background-color: #fff; padding: 0.5rem 1.5rem;">
                                     <ol style="padding-left: 1.2rem; line-height: 2;">
-                                    {{
-                                        $resep->tools
-                                    }}
+                                    {!! $resep->tools !!}
                                     </ol>
                                 </div>
                             </div>
@@ -131,9 +127,7 @@
                         <div id="bahan" class="accordion-collapse collapse show">
                             <div class="accordion-body montserrat-regular" style="background-color: #fff; padding: 0.5rem 1.5rem;">
                                 <ol style="padding-left: 1.2rem; line-height: 2;">
-                                    {{
-                                        $resep->how_to  
-                                    }}
+                                    {!! $resep->how_to !!}
                                 </ol>
                             </div>
                         </div>

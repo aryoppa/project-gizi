@@ -253,63 +253,63 @@
                 }
             }
             // video preview helper: normalize common links to embed URL
-    function normalizeVideoLink(url) {
-        if (!url) return null;
+            function normalizeVideoLink(url) {
+                if (!url) return null;
 
-        // Google Drive file link -> preview
-        const driveFile = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
-        if (driveFile) {
-            return `https://drive.google.com/file/d/${driveFile[1]}/preview`;
-        }
+                // Google Drive file link -> preview
+                const driveFile = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+                if (driveFile) {
+                    return `https://drive.google.com/file/d/${driveFile[1]}/preview`;
+                }
 
-        // Google Drive "open?id=" -> preview
-        const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
-        if (driveOpen) {
-            return `https://drive.google.com/file/d/${driveOpen[1]}/preview`;
-        }
+                // Google Drive "open?id=" -> preview
+                const driveOpen = url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+                if (driveOpen) {
+                    return `https://drive.google.com/file/d/${driveOpen[1]}/preview`;
+                }
 
-        // YouTube watch?v= or youtu.be -> embed
-        const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
-        if (yt) {
-            return `https://www.youtube.com/embed/${yt[1]}`;
-        }
+                // YouTube watch?v= or youtu.be -> embed
+                const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+                if (yt) {
+                    return `https://www.youtube.com/embed/${yt[1]}`;
+                }
 
-        // If already an embed URL, return as is
-        if (url.includes('youtube.com/embed') || url.includes('drive.google.com')) return url;
+                // If already an embed URL, return as is
+                if (url.includes('youtube.com/embed') || url.includes('drive.google.com')) return url;
 
-        return null; // unknown
-    }
+                return null; // unknown
+            }
 
-    const videoLinkInput = document.getElementById('video_link');
-    const videoPreviewWrapper = document.getElementById('videoPreviewWrapper');
-    const videoEmbed = document.getElementById('videoEmbed');
+            const videoLinkInput = document.getElementById('video_link');
+            const videoPreviewWrapper = document.getElementById('videoPreviewWrapper');
+            const videoEmbed = document.getElementById('videoEmbed');
 
-    function updateVideoPreviewFromValue(value) {
-        const embedUrl = normalizeVideoLink(value);
-        if (!embedUrl) {
-            videoPreviewWrapper.style.display = 'none';
-            videoEmbed.innerHTML = '';
-            return;
-        }
+            function updateVideoPreviewFromValue(value) {
+                const embedUrl = normalizeVideoLink(value);
+                if (!embedUrl) {
+                    videoPreviewWrapper.style.display = 'none';
+                    videoEmbed.innerHTML = '';
+                    return;
+                }
 
-        videoEmbed.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>`;
-        videoPreviewWrapper.style.display = 'block';
-    }
+                videoEmbed.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen frameborder="0"></iframe>`;
+                videoPreviewWrapper.style.display = 'block';
+            }
 
-    // initial: if value present from server, show preview
-    document.addEventListener('DOMContentLoaded', function() {
-        const initialVideo = videoLinkInput.value;
-        if (initialVideo) updateVideoPreviewFromValue(initialVideo);
-    });
+            // initial: if value present from server, show preview
+            document.addEventListener('DOMContentLoaded', function() {
+                const initialVideo = videoLinkInput.value;
+                if (initialVideo) updateVideoPreviewFromValue(initialVideo);
+            });
 
-    videoLinkInput.addEventListener('blur', function(e) {
-        updateVideoPreviewFromValue(e.target.value.trim());
-    });
+            videoLinkInput.addEventListener('blur', function(e) {
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
 
-    videoLinkInput.addEventListener('input', function(e) {
-        // live preview while typing -- optional, comment out if noisy
-        updateVideoPreviewFromValue(e.target.value.trim());
-    });
+            videoLinkInput.addEventListener('input', function(e) {
+                // live preview while typing -- optional, comment out if noisy
+                updateVideoPreviewFromValue(e.target.value.trim());
+            });
         </script>
     </x-layout-admin>
 </body>

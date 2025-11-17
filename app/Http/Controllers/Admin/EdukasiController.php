@@ -58,6 +58,13 @@ class EdukasiController extends Controller
     {
         // dd($edukasi);
         $edukasis = Edukasi::latest()->paginate(12);
+        $edukasis->getCollection()->transform(function ($item) {
+            $item->image = $item->image 
+                ? asset('storage/' . ltrim($item->image, '/')) 
+                : asset('img/placeholder.png');
+            $item->link = $item->id;
+            return $item;
+        });
         return view('detail_edukasi', compact('edukasi', 'edukasis'));
     }
 

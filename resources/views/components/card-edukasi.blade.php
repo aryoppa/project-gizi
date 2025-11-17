@@ -2,7 +2,7 @@
 
 <div class="card card-edukasi h-100 border-0 shadow-sm">
     <div class="image-edukasi">
-        <img src="{{ $image }}" alt="{{ $title }}" class="img-fluid">
+        <img src="{{ $image }}" alt="{{ $image }}" class="img-fluid">
     </div>
     <div class="card-body montserrat">
         <h5 class="card-title montserrat-bold mb-2">{{ $title }}</h5>

@@ -80,6 +80,13 @@ class ResepController extends Controller
     public function show(Resep $resep)
     {
         $reseps = Resep::latest()->paginate(12);
+        $reseps->getCollection()->transform(function ($item) {
+            $item->image = $item->image 
+                ? asset('storage/' . ltrim($item->image, '/')) 
+                : asset('img/placeholder.png');
+            $item->link = $item->id;
+            return $item;
+        });
         return view('detail_resep', compact('resep', 'reseps'));
     }
 
