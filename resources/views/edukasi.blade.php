@@ -43,92 +43,30 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="row g-4 mb-5">
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="1 Nov 2025"
-                        link="/edukasi/1"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="1 Nov 2025"
-                        link="/edukasi/2"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="1 Nov 2025"
-                        link="/edukasi/3"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="30 Okt 2025"
-                        link="/edukasi/4"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="29 Okt 2025"
-                        link="/edukasi/5"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="28 Okt 2025"
-                        link="/edukasi/6"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="27 Okt 2025"
-                        link="/edukasi/7"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="26 Okt 2025"
-                        link="/edukasi/8"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-edukasi 
-                        image="/img/food1.png"
-                        title="Apa itu gizi seimbang?"
-                        user="Admin"
-                        date="25 Okt 2025"
-                        link="/edukasi/9"
-                    />
-                </div>
+                @forelse($edukasis as $edukasi)
+                    <div class="col-lg-4 col-md-6">
+                        <x-card-edukasi 
+                            :image=" $edukasi->image ? asset('storage/' . $edukasi->image) : '/img/placeholder.png' "
+                            :title="$edukasi->title"
+                            user="Admin"
+                            :date=" optional($edukasi->published_at ?? $edukasi->created_at)->format('d M Y') "
+                            :link=" route('edukasi.show', $edukasi->id) "
+                        />
+                    </div>
+                @empty
+                    <p class="text-center text-muted">Belum ada edukasi.</p>
+                @endforelse
             </div>
 
-            <nav aria-label="Page navigation">
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
+                {{-- Preserve query string on pagination links --}}
+                {{ $edukasis->appends(request()->query())->links() }}
+            </div>
+
+            <!-- <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center align-items-center">
                     <li class="page-item disabled">
                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
@@ -160,7 +98,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
     </section>
 

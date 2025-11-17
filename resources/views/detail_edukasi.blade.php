@@ -29,9 +29,10 @@
             <div class="mb-4">
                 <div class="montserrat-regular d-flex align-items-center gap-5" style="color: #666666;">
                     <span><i class="bi bi-person me-2"></i>Diposting oleh Admin</span>
-                    <span><i class="bi bi-calendar me-2"></i>1 November 2025</span>
+                    <span><i class="bi bi-calendar me-2"></i>{{ optional($edukasi->published_at ?? $edukasi->created_at)->format('d M Y') }}</span>
                 </div>
             </div>
+            
 
             <div class="row g-4">
                 <div class="col-lg-5">

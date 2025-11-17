@@ -15,6 +15,12 @@ class EdukasiController extends Controller
         return view('admin_edukasi', compact('edukasis')); // admin list view or public list
     }
 
+    public function home_index()
+    {
+        $edukasis = Edukasi::latest()->paginate(12);
+        return view('edukasi', compact('edukasis')); // admin list view or public list
+    }
+
     public function create()
     {
         return view('tambah_edukasi');
@@ -49,6 +55,7 @@ class EdukasiController extends Controller
 
     public function show(Edukasi $edukasi)
     {
+        // dd($edukasi);
         return view('detail_edukasi', compact('edukasi'));
     }
 

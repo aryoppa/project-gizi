@@ -17,9 +17,8 @@ Route::get('/dokumentasi', function () {
     return view('dokumentasi');
 });
 
-Route::get('/edukasi', function () {
-    return view('edukasi');
-});
+Route::get('/edukasi', [EdukasiController::class, 'home_index'])->name('edukasi.index');
+Route::get('/edukasi/{edukasi}', [EdukasiController::class, 'show'])->name('edukasi.show');
 
 Route::get('/edukasi/{id}', function ($id) {
     return view('detail_edukasi');
@@ -49,7 +48,7 @@ Route::middleware(['web', 'count.visitor'])->group(function () {
 
     Route::get('/dokumentasi', function () { return view('dokumentasi'); });
 
-    Route::get('/edukasi', function () { return view('edukasi'); });
+    Route::get('/edukasi', [EdukasiController::class, 'home_index'])->name('edukasi.index');
     Route::get('/edukasi/{id}', function ($id) { return view('detail_edukasi'); });
 
     Route::get('/resep', function () { return view('resep'); });
