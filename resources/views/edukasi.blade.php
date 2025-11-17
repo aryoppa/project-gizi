@@ -31,7 +31,7 @@
                         EDUKASI GIZI
                     </h2>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="search-box">
                         <div class="input-group">
                             <input type="text" class="form-control montserrat-regular" placeholder="search text" 
@@ -41,7 +41,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             
             <div class="row g-4 mb-5">

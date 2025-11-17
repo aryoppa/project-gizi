@@ -24,13 +24,9 @@ Route::get('/edukasi/{id}', function ($id) {
     return view('detail_edukasi');
 });
 
-Route::get('/resep', function () {
-    return view('resep');
-});
+Route::get('/resep', [ResepController::class, 'home_index'])->name('resep.index');
 
-Route::get('/resep/{id}', function ($id) {
-    return view('detail_resep');
-});
+Route::get('/resep/{resep}', [ResepController::class, 'show'])->name('resep.show');
 
 Route::get('/mealplan', function () {
     return view('mealplan');
@@ -51,7 +47,7 @@ Route::middleware(['web', 'count.visitor'])->group(function () {
     Route::get('/edukasi', [EdukasiController::class, 'home_index'])->name('edukasi.index');
     Route::get('/edukasi/{id}', function ($id) { return view('detail_edukasi'); });
 
-    Route::get('/resep', function () { return view('resep'); });
+    Route::get('/resep', [ResepController::class, 'home_index'])->name('resep.index');
     Route::get('/resep/{id}', function ($id) { return view('detail_resep'); });
 
     Route::get('/mealplan', function () { return view('mealplan'); });

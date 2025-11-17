@@ -16,7 +16,6 @@
 
 <body style="background-color: #FFF; overflow-x: hidden; padding-top: 70px;">
     <x-navbar class="montserrat" />
-    
     <section class="detail-artikel py-5" style="background-color: #ffffff;">
         <div class="container montserrat">
         <div class="my-4">
@@ -37,7 +36,7 @@
             <div class="row g-4">
                 <div class="col-lg-5">
                     <div class="artikel-image mb-4">
-                        <img src="/img/food1.png" alt="Gizi Seimbang" class="img-fluid rounded">
+                        <img src="{{$edukasi->image ? asset('storage/' . $edukasi->image) : '/img/placeholder.png'}}" alt="Gizi Seimbang" class="img-fluid rounded">
                     </div>
                     
                     <div class="d-flex gap-3">
@@ -52,31 +51,13 @@
 
                 <div class="col-lg-7">
                     <h1 class="nerko-one-regular mb-4" style="font-size: 2.5rem;">
-                        APA ITU GIZI SEIMBANG?
+                        {{$edukasi->title}}
                     </h1>
                     
                     <p class="montserrat-regular mb-4" style="line-height: 1.8; text-align: justify;">
-                        Gizi seimbang adalah susunan makanan sehari-hari yang mengandung zat-zat gizi dalam jenis dan jumlah yang sesuai kebutuhan tubuh anak, disertai dengan kebiasaan hidup sehat agar anak tumbuh dan berkembang optimal.
+                        {{$edukasi->description}}
                     </p>
 
-                    <p class="montserrat-regular mb-3" >
-                        Contoh makanan
-                    </p>
-                    
-                    <ul class="list-unstyled montserrat-regular" style="line-height: 2;">
-                        <li class="mb-2">
-                            <strong>Karbohidrat:</strong> nasi, roti, <i>oatmeal</i>
-                        </li>
-                        <li class="mb-2">
-                            <strong>Protein:</strong> telur, ikan, tempe
-                        </li>
-                        <li class="mb-2">
-                            <strong>Sayur dan buah:</strong> wortel, apel, pisang
-                        </li>
-                        <li class="mb-2">
-                            <strong>Susu:</strong> membantu pertumbuhan tulang dan gigi
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -90,54 +71,11 @@
                     EDUKASI GIZI LAINNYA
                 </h2>
             </div>
-
+            
             <x-carousel 
                 type="edukasi"
                 carouselId="edukasiCarousel"
-                :items="collect([
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/1'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/2'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/3'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/4'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/5'
-                    ],
-                    [
-                        'image' => '/img/food1.png',
-                        'title' => 'Apa itu gizi seimbang?',
-                        'user' => 'Admin',
-                        'date' => '1 Nov 2025',
-                        'link' => '/edukasi/6'
-                    ]
-                ])" 
+                :items="$edukasis" 
             />
         </div>
     </section>

@@ -31,7 +31,7 @@
                         RESEP MAKANAN SEHAT
                     </h2>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="search-box">
                         <div class="input-group">
                             <input type="text" class="form-control montserrat-regular" placeholder="search text" 
@@ -41,153 +41,34 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="row g-4 mb-5">
+                @forelse($reseps as $resep)
                 <div class="col-lg-4 col-md-6">
                     <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/1"
+                        image=" {{$resep->image ? asset('storage/' . $resep->image) : '/img/placeholder.png'}} "
+                        title=" {{$resep->name}} "
+                        energy="{{  $resep->energy }}"
+                        protein="{{  $resep->protein }}"
+                        fat="{{  $resep->fat }}"
+                        carbs="{{  $resep->carbs }}"
+                        portion="{{  $resep->portion }}"
+                        link=" {{ route('resep.show', $resep->id) }} "
                     />
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/2"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/3"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/4"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/5"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/6"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/7"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/8"
-                    />
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <x-card-resep 
-                        image="/img/food2.jpg"
-                        title="Odeng Ayam"
-                        energy="121,35 kkal"
-                        protein="7,62 g"
-                        fat="8,01 g"
-                        carbs="5,23g"
-                        portion="10 Porsi"
-                        link="/resep/9"
-                    />
-                </div>
+                @empty
+                    <p class="text-center text-muted">Belum ada resep.</p> 
+                @endforelse
             </div>
 
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center align-items-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">20</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">30</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">
-                            <span class="montserrat-medium">Next</span>
-                            <i class="bi bi-chevron-right ms-1"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
+                {{-- Preserve query string on pagination links --}}
+                {{ $reseps->appends(request()->query())->links() }}
+            </div>
         </div>
     </section>
 

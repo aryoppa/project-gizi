@@ -16,6 +16,13 @@ class ResepController extends Controller
         return view('admin_resep', compact('reseps'));
     }
 
+    public function home_index()
+    {
+        $reseps = Resep::latest()->paginate(12);
+        // dd($reseps->toArray()); 
+        return view('resep', compact('reseps'));
+    }
+
     public function create()
     {
         return view('tambah_resep');
@@ -72,7 +79,8 @@ class ResepController extends Controller
 
     public function show(Resep $resep)
     {
-        return view('detail_resep', compact('resep'));
+        $reseps = Resep::latest()->paginate(12);
+        return view('detail_resep', compact('resep', 'reseps'));
     }
 
     public function edit(Resep $resep)
