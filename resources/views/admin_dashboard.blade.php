@@ -112,6 +112,16 @@
                 </div>
             </div>
 
+            <!-- Update Booklet -->
+            <div class="container-fluid mb-4">
+                <div class="d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0 montserrat-bold">Update Booklet</h5>
+                    <a href="#" class="btn btn-add montserrat-semibold">
+                        Update Booklet
+                    </a>
+                </div>
+            </div>
+
             <!-- Dokumentasi Section -->
             <div class="container-fluid mb-4">
                 <div class="d-flex justify-content-between align-items-center py-3">
@@ -126,19 +136,17 @@
                         @forelse($dokumentasis as $dokumentasi)
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="documentation-item">
-                                    <img 
-                                        src="{{ $dokumentasi->image ? asset($dokumentasi->image) : asset('/img/placeholder.png') }}"
-                                        alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}"
-                                        class="img-fluid rounded"
-                                    >
+                                    <img src="{{ $dokumentasi->image ? asset($dokumentasi->image) : asset('/img/placeholder.png') }}"
+                                        alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}" class="img-fluid rounded">
                                 </div>
                             </div>
                         @empty
                             <div class="col-12">
                                 <div class="card p-4 text-center">
                                     <h5 class="mb-2">Belum ada dokumentasi.</h5>
-                                    <p class="text-muted mb-0">Klik “Tambahkan Dokumentasi" untuk membuat konten baru.</p>
-                                </div> 
+                                    <p class="text-muted mb-0">Klik “Tambahkan Dokumentasi" untuk membuat konten baru.
+                                    </p>
+                                </div>
                             </div>
                         @endforelse
                     </div>
@@ -157,13 +165,12 @@
                     <div class="row g-4">
                         @forelse($edukasis as $edukasi)
                             <div class="col-lg-3 col-md-6">
-                                <x-card-edukasi 
-                                    :image="$edukasi->image ? asset('storage/' . $edukasi->image) : asset('/img/placeholder.png')"
-                                    :title="$edukasi->title"
-                                    :user="$edukasi->author ?? 'Admin'"
-                                    :date="$edukasi->published_at ? $edukasi->published_at->format('d M Y') : $edukasi->created_at->format('d M Y')"
-                                    :id="$edukasi->id" 
-                                    />
+                                <x-card-edukasi :image="$edukasi->image
+                                    ? asset('storage/' . $edukasi->image)
+                                    : asset('/img/placeholder.png')" :title="$edukasi->title" :user="$edukasi->author ?? 'Admin'" :date="$edukasi->published_at
+                                    ? $edukasi->published_at->format('d M Y')
+                                    : $edukasi->created_at->format('d M Y')"
+                                    :id="$edukasi->id" />
                             </div>
                         @empty
                             <div class="col-12">
@@ -188,17 +195,11 @@
                     <div class="row g-4">
                         @forelse($reseps as $resep)
                             <div class="col-lg-3 col-md-6">
-                                <x-card-resep 
-                                    :image="$resep->image ? asset('storage/' . $resep->image) : asset('/img/placeholder.png')"
-                                    :title="$resep->name"
-                                    :energy="$resep->energy"
-                                    :protein="$resep->protein"
-                                    :fat="$resep->fat"
-                                    :carbs="$resep->carbs"
-                                    :portion="$resep->portion"
-                                    :id="$resep->id"
-                                    />
-                            </div> 
+                                <x-card-resep :image="$resep->image
+                                    ? asset('storage/' . $resep->image)
+                                    : asset('/img/placeholder.png')" :title="$resep->name" :energy="$resep->energy" :protein="$resep->protein"
+                                    :fat="$resep->fat" :carbs="$resep->carbs" :portion="$resep->portion" :id="$resep->id" />
+                            </div>
                         @empty
                             <div class="col-12">
                                 <div class="card p-4 text-center">
@@ -246,6 +247,22 @@
 
             .bg-info-light {
                 background-color: rgba(13, 202, 240, 0.1);
+            }
+
+            /* Button Add */
+            .btn-add {
+                background-color: #ffffff;
+                color: #000000;
+                border: 1px solid #287BBF;
+                border-radius: 25px;
+                padding: 0.6rem 1.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .btn-add:hover {
+                background-color: #287BBF;
+                color: #ffffff;
+                box-shadow: 0 4px 12px #287bbf;
             }
 
             /* Documentation Item */
