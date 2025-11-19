@@ -16,7 +16,7 @@ class HomeController extends Controller
         
         $carouselItems = $edukasis->map(function($e) {
             return [
-                'image' => $e->image ? asset('storage/' . $e->image) : asset('/img/placeholder.png'),
+                'image' => $e->image ? asset($e->image) : asset('/img/placeholder.png'),
                 'title' => $e->title,
                 'user'  => $e->author ?? 'Admin',
                 'date'  => optional($e->published_at ?? $e->created_at)->format('d M Y'),
@@ -30,7 +30,7 @@ class HomeController extends Controller
         $reseps = Resep::latest()->take(8)->get();
         $resepItems = $reseps->map(function($r) {
             return [
-                'image'  => $r->image ? asset('storage/' . $r->image) : asset('/img/placeholder.png'),
+                'image'  => $r->image ? asset($r->image) : asset('/img/placeholder.png'),
                 'title'  => $r->name,
                 'energy' => $r->energy,
                 'protein'=> $r->protein,
@@ -44,7 +44,7 @@ class HomeController extends Controller
         $dokumentasis = Dokumentasi::latest()->take(8)->get();
         $dokItems = $dokumentasis->map(function($d) {
             return [
-                'image' => $d->image ? asset('storage/' . $d->image) : asset('/img/placeholder.png'),
+                'image' => $d->image ? asset($d->image) : asset('/img/placeholder.png'),
                 'title' => $d->title ?? 'Dokumentasi',
                 'link'  => url('/dokumentasi/' . $d->id),
             ];

@@ -1,4 +1,5 @@
 @props([
+    'name',
     'image',
     'title',
     'energy',
@@ -11,9 +12,46 @@
     'id' => null,
 ])
 
+@php
+    $raw = trim((string) ($image ?? ''));
+
+    // default
+    $imageUrl = asset('images/placeholder.png');
+
+    // if it's an absolute URL that contains '/storage/', strip domain+storage and use asset()
+    if ($raw !== '' && (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://') || str_starts_with($raw, '//'))) {
+        // try to find '/storage/' in the URL and take the part after it
+        $pos = strpos($raw, '/storage/');
+        if ($pos !== false) {
+            $after = substr($raw, $pos + strlen('/storage/'));
+            $imageUrl = asset(ltrim($after, '/'));
+        } else {
+            // external full URL (no /storage/) — keep as is
+            $imageUrl = $raw;
+        }
+    }
+    // if starts with "storage/..." (relative)
+    elseif ($raw !== '' && str_starts_with($raw, 'storage/')) {
+        $imageUrl = asset(substr($raw, strlen('storage/')));
+    }
+    // if contains project_gizi/public/...
+    elseif ($raw !== '' && strpos($raw, 'project_gizi/public') !== false) {
+        $clean = substr($raw, strpos($raw, 'project_gizi/public/') + strlen('project_gizi/public/'));
+        $imageUrl = asset(ltrim($clean, '/'));
+    }
+    // plain relative path like 'img/edukasi/..'
+    elseif ($raw !== '') {
+        $imageUrl = asset(ltrim($raw, '/'));
+    }
+
+    // debug: to logs (remove later)
+    logger("IMAGE NORMALIZER raw=[$raw] final=[$imageUrl]");
+@endphp
+
 <div class="card card-resep h-100 border-0 shadow-sm">
     <div class="image-resep">
-        <img src="{{ $image }}" alt="{{ $title }}" class="img-fluid">
+        <!--{{ $imageUrl }}-->
+        <img src="{{ $imageUrl }}" alt="{{ $title }}" class="img-fluid">
     </div>
     <div class="card-body montserrat">
         <div class="d-flex justify-content-between align-items-start mb-2">

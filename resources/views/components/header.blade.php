@@ -17,7 +17,7 @@
         <h1 class="nerko-one-regular display-4 fw-bold mt-4" style="font-size: 3.125rem;">{!! $title !!}</h1>
         <p class="nerko-one-regular lead mb-3" style="font-size: 1.5rem;">{!! $subtitle !!}</p>
         @if($showDownloadButton)
-        <a href="{{ asset('storage/booklet/Booklet Abdimas.pdf') }}" class="btn btn-orange"><i>Download Booklet</i></a>
+        <a href="{{ asset('booklet/Booklet Abdimas.pdf') }}" class="btn btn-orange"><i>Download Booklet</i></a>
         @endif
     </div>
 </header>

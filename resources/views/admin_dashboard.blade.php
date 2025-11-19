@@ -127,7 +127,7 @@
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="documentation-item">
                                     <img 
-                                        src="{{ $dokumentasi->image ? asset('storage/' . $dokumentasi->image) : asset('/img/placeholder.png') }}"
+                                        src="{{ $dokumentasi->image ? asset($dokumentasi->image) : asset('/img/placeholder.png') }}"
                                         alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}"
                                         class="img-fluid rounded"
                                     >

@@ -120,7 +120,7 @@
                         <div class="col-md-6">
                             <label for="ingridients" class="form-label montserrat-semibold">Bahan</label>
                             <textarea class="form-control montserrat-regular rich-editor"
-                                    id="ingridients" name="ingridients" rows="6" placeholder="Bahan" required>{{ old('ingridients', $resep->ingridients ?? '') }}</textarea>
+                                    id="ingridients" name="ingridients" rows="6" placeholder="Bahan">{{ old('ingridients', $resep->ingridients ?? '') }}</textarea>
                             @error('ingridients')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -129,7 +129,7 @@
                         <div class="col-md-6">
                             <label for="tools" class="form-label montserrat-semibold">Alat-Alat</label>
                             <textarea class="form-control montserrat-regular rich-editor"
-                                    id="tools" name="tools" rows="6" placeholder="Alat-alat" required>{{ old('tools', $resep->tools ?? '') }}</textarea>
+                                    id="tools" name="tools" rows="6" placeholder="Alat-alat">{{ old('tools', $resep->tools ?? '') }}</textarea>
                             @error('tools')
                                 <div class="text-danger mt-1 small">{{ $message }}</div>
                             @enderror
@@ -140,7 +140,7 @@
                     <div class="mb-4">
                         <label for="how_to" class="form-label montserrat-semibold">Cara Pembuatan</label>
                         <textarea class="form-control montserrat-regular rich-editor"
-                                id="how_to" name="how_to" rows="8" placeholder="Cara Pembuatan" required>{{ old('how_to', $resep->how_to ?? '') }}</textarea>
+                                id="how_to" name="how_to" rows="8" placeholder="Cara Pembuatan">{{ old('how_to', $resep->how_to ?? '') }}</textarea>
                         @error('how_to')
                             <div class="text-danger mt-1 small">{{ $message }}</div>
                         @enderror

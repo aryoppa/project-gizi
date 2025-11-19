@@ -44,13 +44,33 @@ class ResepController extends Controller
         ]);
 
         try {
-            // store image if provided
-            $path = null;
-            if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                $path = $request->file('image')->store('img/reseps', 'public');
+            $dbPath = null;
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+        
+                // safe filename: timestamp + sanitized original name
+                $original = $file->getClientOriginalName();
+                // remove path, replace whitespace + unsafe chars with underscore
+                $safeName = preg_replace('/[^A-Za-z0-9\-\_\.]/', '_', $original);
+                $filename = time() . '_' . $safeName;
+        
+                // destination: public_html/img/edukasi (document root)
+                $destination = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/img/edukasi';
+        
+                if (!is_dir($destination)) {
+                    mkdir($destination, 0755, true);
+                }
+        
+                // move uploaded file
+                $file->move($destination, $filename);
+        
+                // path relative ke public root (dipakai asset())
+                $dbPath = 'img/edukasi/' . $filename;
             }
 
             // normalize units
+            $portion  = $this->addUnitIfMissing($request->portion, 'Porsi');
             $energy  = $this->addUnitIfMissing($request->energy, 'Kkal');
             $protein = $this->addUnitIfMissing($request->protein, 'g');
             $fat     = $this->addUnitIfMissing($request->fat, 'g');
@@ -59,8 +79,8 @@ class ResepController extends Controller
             // create record
             Resep::create([
                 'name'        => $request->name,
-                'image'       => $path,
-                'portion'     => $request->portion,
+                'image'       => $dbPath,
+                'portion'     => $portion,
                 'energy'      => $energy,
                 'protein'     => $protein,
                 'fat'         => $fat,

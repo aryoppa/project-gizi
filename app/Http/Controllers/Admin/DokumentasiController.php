@@ -29,13 +29,31 @@ class DokumentasiController extends Controller
         $request->validate([
             'image' => 'required|image|mimes:jpeg,jpg,png|max:4096',
         ]);
+        
+        // buat folder jika belum ada
+        if (!file_exists(public_path('img/dokumentasi'))) {
+            mkdir(public_path('img/dokumentasi'), 0777, true);
+        }
+    
+        $file = $request->file('image');
 
-        $path = $request->file('image')->store('img/dokumentasi', 'public');
-
-        // save to DB
+        // path fisik ke public_html
+        $destination = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/img/dokumentasi';
+    
+        if (!file_exists($destination)) {
+            mkdir($destination, 0755, true);
+        }
+    
+        $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+    
+        $file->move($destination, $filename);
+    
+        // path yang disimpan di DB — relatif ke public_html sehingga asset() bekerja
+        $dbPath = 'img/dokumentasi/' . $filename;
+    
         Dokumentasi::create([
-            'image' => $path,
-            'title' => null, // optional or static title
+            'image' => $dbPath,
+            'title' => null,
         ]);
 
         return redirect()->route('admin.dokumentasi.index')

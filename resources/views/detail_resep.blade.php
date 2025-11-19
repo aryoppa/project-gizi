@@ -29,13 +29,13 @@
 
             <!-- GAMBAAAAR -->
             <div class="recipe-image mb-4">
-                <img src="{{$resep->image ? asset('storage/' . $resep->image) : '/img/placeholder.png'}}" alt="Resep Tahu Walik" class="w-100" style="border-radius: 20px; max-height: 400px; object-fit: cover;">
+                <img src="{{$resep->image ? asset($resep->image) : '/img/placeholder.png'}}" alt="Resep Tahu Walik" class="w-100" style="border-radius: 20px; max-height: 400px; object-fit: cover;">
             </div>
 
             <!-- RESEP DAN PORSI -->
             <div class="text-center mb-4">
                 <h1 class="nerko-one-regular mb-2" style="font-size: 2.5rem; color: #000;">RESEP {{$resep->name}}</h1>
-                <p class="montserrat-regular" style="font-size: 1.1rem; color: #666;">{{$resep->portion}} Porsi</p>
+                <p class="montserrat-regular" style="font-size: 1.1rem; color: #666;">{{$resep->portion}}</p>
             </div>
 
             <!-- NUTRITION INFO -->

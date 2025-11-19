@@ -48,7 +48,7 @@
                 @forelse($edukasis as $edukasi)
                     <div class="col-lg-4 col-md-6">
                         <x-card-edukasi 
-                            :image=" $edukasi->image ? asset('storage/' . $edukasi->image) : '/img/placeholder.png' "
+                            :image=" $edukasi->image ? asset( $edukasi->image) : '/img/placeholder.png' "
                             :title="$edukasi->title"
                             user="Admin"
                             :date=" optional($edukasi->published_at ?? $edukasi->created_at)->format('d M Y') "

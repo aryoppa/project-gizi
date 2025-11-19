@@ -37,15 +37,34 @@ class EdukasiController extends Controller
             'published_at' => 'nullable|date',
         ]);
 
-        // dd($request->all());
-        $path = null;
+        $dbPath = null;
+
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('img/edukasi', 'public');
+            $file = $request->file('image');
+    
+            // safe filename: timestamp + sanitized original name
+            $original = $file->getClientOriginalName();
+            // remove path, replace whitespace + unsafe chars with underscore
+            $safeName = preg_replace('/[^A-Za-z0-9\-\_\.]/', '_', $original);
+            $filename = time() . '_' . $safeName;
+    
+            // destination: public_html/img/edukasi (document root)
+            $destination = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/img/edukasi';
+    
+            if (!is_dir($destination)) {
+                mkdir($destination, 0755, true);
+            }
+    
+            // move uploaded file
+            $file->move($destination, $filename);
+    
+            // path relative ke public root (dipakai asset())
+            $dbPath = 'img/edukasi/' . $filename;
         }
 
         Edukasi::create([
             'title' => $request->title,
-            'image' => $path,
+            'image' => $dbPath,
             'video_link' => $request->video_link,
             'description' => $request->description,
             'published_at' => $request->published_at,

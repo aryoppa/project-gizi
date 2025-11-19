@@ -87,7 +87,7 @@
                         <label for="description" class="form-label montserrat-semibold">Deskripsi</label>
 
                         <!-- keep the name "description" so controller menerima input HTML -->
-                        <textarea id="description" name="description" class="form-control montserrat-regular" rows="10" placeholder="Masukkan deskripsi di sini" required>{{ old('description', $edukasi->description ?? '') }}</textarea>
+                        <textarea id="description" name="description" class="form-control montserrat-regular" rows="10" placeholder="Masukkan deskripsi di sini">{{ old('description', $edukasi->description ?? '') }}</textarea>
 
                         @error('description')
                             <div class="text-danger mt-1 small">{{ $message }}</div>

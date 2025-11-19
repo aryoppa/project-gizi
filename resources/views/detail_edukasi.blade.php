@@ -36,7 +36,7 @@
             <div class="row g-4">
                 <div class="col-lg-5">
                     <div class="artikel-image mb-4">
-                        <img src="{{$edukasi->image ? asset('storage/' . $edukasi->image) : '/img/placeholder.png'}}" alt="Gizi Seimbang" class="img-fluid rounded">
+                        <img src="{{$edukasi->image ? asset( $edukasi->image) : '/img/placeholder.png'}}" alt="Gizi Seimbang" class="img-fluid rounded">
                     </div>
                     
                     <div class="d-flex gap-3">

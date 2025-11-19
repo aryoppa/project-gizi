@@ -56,7 +56,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="dokumentasi-card">
                             {{-- ✅ Load image dynamically from storage --}}
-                            <img src="{{ asset('storage/' . $dokumentasi->image) }}"
+                            <img src="{{ asset($dokumentasi->image) }}"
                                 alt="{{ $dokumentasi->title ?? 'Dokumentasi' }}" class="img-fluid">
 
                             <div class="card-overlay">

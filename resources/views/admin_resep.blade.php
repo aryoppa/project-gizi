@@ -48,7 +48,7 @@
                 @forelse($reseps as $resep)
                     <div class="col-lg-3 col-md-6">
                         <x-card-resep
-                            :image="$resep->image ? asset('storage/' . $resep->image) : asset('/img/placeholder.png')"
+                            :image="$resep->image ? asset($resep->image) : asset('/img/placeholder.png')"
                             :title="$resep->name"
                             :energy="$resep->energy"
                             :protein="$resep->protein"
